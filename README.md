@@ -1,7 +1,7 @@
 
 ---
 
-### **README.md**
+### **RepoFinalDB**
 
 ```markdown
 # Sistema de Gestión Académica
