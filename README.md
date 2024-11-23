@@ -1,138 +1,144 @@
-# RepoFinalDB
-
-En este repositorio se encuentran los siguientes entregables:
--Modelo EntidadRelacion
--Modelo Relacional
--Backup de la Base de Datos Relacional
--Scripts para el ingreso de los datos en cada una de las tablas
--Aplicacion que implementa la estructura del negocio:
-    -Backend
-    -Frontend: Debido al tamaño Github no permitió añadir los archivos,
-    por lo que
-
-
-# Proyecto - Backend
-
-Gestionar usuarios, instituciones, aulas, horarios y estudiantes. Proporciona una serie de API REST que interactúan con una base de datos relacional.
 
 ---
 
-## 🚀 Características
+### **README.md**
 
-- Gestión de usuarios, estudiantes, instituciones, horarios y aulas.
-- Registro y consulta de asistencias.
-- Generación de reportes detallados (usuarios, instituciones, estudiantes por aula, calificaciones, etc.).
-- API RESTful con manejo de errores y respuestas estandarizadas.
+```markdown
+# Sistema de Gestión Académica
 
----
+Este proyecto es un sistema de gestión académica diseñado para apoyar la enseñanza del inglés en niños de instituciones públicas de Barranquilla, gestionado por la Fundación FOREIGN LANGUAGE FOR KIDS EMPOWERMENT (FLAKE).
 
-## 🛠 Requisitos previos
+## **Descripción General**
 
-Antes de ejecutar este proyecto, asegúrate de cumplir con los siguientes requisitos:
-
-1. **Python** (>= 3.8)
-2. **Servidor de base de datos** compatible (PostgreSQL, MySQL, etc.)
-3. **Paquetes Python**:
-   - Flask
-   - psycopg2 (o el cliente correspondiente a tu base de datos)
-   - Otros necesarios (se especifican en `requirements.txt`)
+El sistema está compuesto por:
+1. **Backend:** Construido en Python con Flask (`app.py`), que proporciona una API REST para la gestión de usuarios, instituciones, aulas, horarios, estudiantes, calificaciones y reportes.
+2. **Frontend:** Una página web simple (`index.html`) que consume la API del backend y permite a los usuarios interactuar con el sistema según sus roles (Administrador o Tutor).
 
 ---
 
-## 📂 Estructura del proyecto
+## **Características**
 
-```
-.
-├── app.py                # Archivo principal que inicia el servidor Flask
-├── Conexion.py           # Configuración de conexión a la base de datos
-├── InicioSesion.py       # Lógica de verificación de credenciales
-├── requirements.txt      # Dependencias del proyecto
-└── README.md             # Este archivo
-```
+### **Backend**
+El backend soporta las siguientes funcionalidades:
+- Gestión de **usuarios**, **instituciones**, **aulas**, **horarios**, **estudiantes** y **calificaciones**.
+- Registro y consulta de asistencia para profesores y estudiantes.
+- Generación de reportes dinámicos para aulas, asistencia y calificaciones.
+- Control de acceso basado en roles:
+  - **Administrador:** Tiene acceso completo.
+  - **Tutor:** Tiene acceso limitado a calificaciones, asistencia y reportes.
+
+### **Frontend**
+El frontend incluye:
+- Inicio de sesión con redirección según el rol del usuario.
+- Panel de administración con operaciones CRUD para cada entidad.
+- Panel de tutor con funcionalidades específicas para su rol.
+- Generación de reportes dinámicos.
 
 ---
 
-## ⚙ Configuración
+## **Requisitos del Sistema**
 
-### 1. Clonar el repositorio
+### **Backend**
+- Python 3.8 o superior.
+- Flask y Flask-RESTful.
+- Base de datos relacional configurada previamente (ejemplo: SQLite o MySQL).
 
+### **Frontend**
+- Un navegador web moderno (Chrome, Firefox, Edge, etc.).
+
+---
+
+## **Instrucciones de Instalación**
+
+### **1. Clonar el Repositorio**
+Clona este repositorio en tu máquina local:
 ```bash
-git clone https://github.com/tu-usuario/tu-repo.git
-cd tu-repo
+git clone https://github.com/Jhonayker0/RepoFinalDB.git
 ```
 
-### 2. Crear el entorno virtual
+### **2. Configurar el Backend**
 
-```bash
-python -m venv venv
-source venv/bin/activate   # En Linux/Mac
-venv\Scripts\activate      # En Windows
-```
+1. **Crear un entorno virtual:**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # En Windows: venv\Scripts\activate
+   ```
 
-### 3. Instalar las dependencias
+2. **Configurar la base de datos:**
+   - Asegúrate de tener configurada la base de datos mencionada en `app.py`.
+   - Si estás usando SQLite, el archivo de la base de datos debería generarse automáticamente al ejecutar el backend.
 
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Configurar la conexión a la base de datos
-
-En el archivo `Conexion.py`, configura los parámetros de conexión:
-
-```python
-import psycopg2
-
-def obtener_conexion():
-    return psycopg2.connect(
-        host="localhost",       # Cambia por tu host
-        port="5432",            # Puerto del servidor de la base de datos
-        database="mi_base",     # Nombre de la base de datos
-        user="mi_usuario",      # Usuario
-        password="mi_contraseña" # Contraseña
-    )
-```
-
-### 5. Crear la base de datos y el esquema
-
-Asegúrate de que las tablas y esquemas mencionados en el proyecto existan en tu base de datos. Si necesitas un script de inicialización, crea uno basado en las tablas utilizadas.
-
-Ejemplo:
-```sql
-CREATE SCHEMA "TempSchema";
-CREATE TABLE "TempSchema"."Usuario" (
-    "IDUsuario" SERIAL PRIMARY KEY,
-    "Rol" VARCHAR(50),
-    "Pwd" VARCHAR(255),
-    "Año" INTEGER
-);
--- Añade más tablas según las necesidades del proyecto
-```
+3. **Ejecutar el servidor:**
+   ```bash
+   python app.py
+   ```
+   Esto iniciará el servidor en `http://127.0.0.1:5000`.
 
 ---
 
-## ▶ Cómo ejecutar el servidor
+### **3. Configurar el Frontend**
 
-### 1. Iniciar la base de datos
-Asegúrate de que el servidor de la base de datos esté activo.
+1. Abre el archivo `index.html` en un editor de texto.
+2. Asegúrate de que la URL del backend esté configurada correctamente:
+   ```javascript
+   const apiUrl = 'http://127.0.0.1:5000'; // RECORDAR!!!! Cambiar si el backend está en otra dirección
+   ```
 
-### 2. Ejecutar el servidor Flask
-
-```bash
-python app.py
-```
-
-Por defecto, la aplicación estará disponible en: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+3. Abre el archivo `index.html` en tu navegador web.
 
 ---
 
-## 🧪 Pruebas
 
-Puedes utilizar herramientas como **Postman** o **cURL** para probar los endpoints. Aquí hay un ejemplo básico:
+## **Uso del Sistema**
 
-```bash
-curl -X POST http://127.0.0.1:5000/obtener-rol \
--H "Content-Type: application/json" \
--d '{"identificacion": "123456", "password": "mi_password"}'
-```
+### **1. Inicio de Sesión**
+- Ingresa tu identificación y contraseña.
+- Según tu rol (Administrador o Tutor), serás redirigido al panel correspondiente.
+
+### **2. Panel de Administración**
+- **Usuarios:** Agregar, editar, eliminar y listar usuarios.
+- **Instituciones:** Administrar información sobre las instituciones educativas.
+- **Aulas:** Gestionar aulas, asignar tutores y grupos.
+- **Estudiantes:** Registrar y gestionar estudiantes.
+- **Horarios:** Configurar horarios de clases para las aulas.
+- **Calificaciones:** Registrar y consultar calificaciones de estudiantes.
+- **Reportes:** Generar reportes sobre aulas, asistencia y más.
+
+### **3. Panel del Tutor**
+- **Asistencia:** Registrar la asistencia de estudiantes.
+- **Calificaciones:** Registrar calificaciones por bloque lectivo.
+- **Reportes:** Consultar reportes de asistencia y calificaciones.
+
+---
+
+## **Endpoints del Backend**
+
+### **Usuarios**
+- `GET /reporte-usuarios`: Listar usuarios.
+- `POST /crear-usuario`: Crear un usuario.
+
+### **Instituciones**
+- `GET /reporte-instituciones`: Listar instituciones.
+- `POST /crear-institucion`: Crear una institución.
+
+### **Aulas**
+- `GET /generar_reporte_aulas`: Listar aulas.
+- `POST /aulas/agregar`: Crear un aula.
+
+### **Estudiantes**
+- `GET /reporte-estudiantes-aula`: Listar estudiantes por aula.
+- `POST /insertar-estudiante`: Registrar un estudiante.
+
+### **Horarios**
+- `GET /generar_horario_tutor`: Listar horarios por tutor.
+- `POST /insertar-horario`: Crear un horario.
+
+### **Calificaciones**
+- `GET /calificaciones-aula`: Listar calificaciones por aula.
+- `POST /calificar-estudiante`: Registrar una calificación.
+
+### **Asistencia**
+- `GET /asistencias-aula`: Listar asistencias por aula.
+- `POST /registrar-asistencia`: Registrar asistencia.
 
 ---
