@@ -1,0 +1,134 @@
+/* Contenedor principal del Dashboard */
+.tutor-dashboard-container {
+  font-family: Arial, sans-serif;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Título principal */
+.tutor-dashboard-container h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Mensaje de carga */
+.tutor-dashboard-container p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Botón de cerrar sesión */
+.tutor-dashboard-container button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tutor-dashboard-container button:hover {
+  background-color: #c82333;
+}
+
+/* Contenedor de selección de instituciones */
+.institution-selection-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+/* Detalles de las instituciones */
+.institution-details-container {
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-align: left;
+}
+
+/* Botones de navegación */
+.institution-details-container button {
+  padding: 10px 15px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.institution-details-container button:hover {
+  background-color: #0056b3;
+}
+
+/* Tarjetas de instituciones */
+.institution-selection-container .institution-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.institution-selection-container .institution-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen de la institución */
+.institution-selection-container .institution-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* Nombre de la institución */
+.institution-selection-container .institution-card p {
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .tutor-dashboard-container {
+    padding: 15px;
+  }
+
+  .institution-selection-container {
+    gap: 15px;
+  }
+
+  .institution-selection-container .institution-card {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .institution-selection-container .institution-card img {
+    margin-right: 15px;
+  }
+}

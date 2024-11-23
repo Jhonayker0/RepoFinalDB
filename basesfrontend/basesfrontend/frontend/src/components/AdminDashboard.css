@@ -1,0 +1,40 @@
+/* AdminDashboard.css */
+
+.admin-dashboard-container {
+    padding: 20px;
+  }
+  
+  .admin-dashboard-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .admin-dashboard-menu button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .admin-dashboard-menu button:hover {
+    background-color: #45a049;
+  }
+  
+  .admin-dashboard-section {
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #007B8A;
+  }
+  
