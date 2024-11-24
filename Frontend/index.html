@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,15 +31,16 @@
         <!-- Admin Panel -->
         <div id="admin-panel" class="hidden">
             <h2>Panel de Administración</h2>
-            <div>
-                <button class="btn btn-secondary" onclick="loadAdminSection('users')">Gestión de Usuarios</button>
-                <button class="btn btn-secondary" onclick="loadAdminSection('institutions')">Gestión de Instituciones</button>
-                <button class="btn btn-secondary" onclick="loadAdminSection('classes')">Gestión de Aulas</button>
-                <button class="btn btn-secondary" onclick="loadAdminSection('students')">Gestión de Estudiantes</button>
-                <button class="btn btn-secondary" onclick="loadAdminSection('schedules')">Gestión de Horarios</button>
-                <button class="btn btn-secondary" onclick="loadAdminSection('grades')">Gestión de Calificaciones</button>
-                <button class="btn btn-secondary" onclick="loadAdminSection('reports')">Reportes</button>
-                <button class="btn btn-danger" onclick="logout()">Cerrar Sesión</button>
+            <div class="mb-3">
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadAdminSection('users')">Gestión de Usuarios</button>
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadAdminSection('institutions')">Gestión de Instituciones</button>
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadAdminSection('classes')">Gestión de Aulas</button>
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadAdminSection('students')">Gestión de Estudiantes</button>
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadAdminSection('schedules')">Gestión de Horarios</button>
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadAdminSection('grades')">Gestión de Calificaciones</button>
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadAdminSection('academic-years')">Gestión de Años Académicos</button>
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadAdminSection('reports')">Reportes</button>
+                <button class="btn btn-danger mb-2" onclick="logout()">Cerrar Sesión</button>
             </div>
             <div id="admin-content" class="mt-4"></div>
         </div>
@@ -47,19 +48,39 @@
         <!-- Tutor Panel -->
         <div id="tutor-panel" class="hidden">
             <h2>Panel del Tutor</h2>
-            <div>
-                <button class="btn btn-secondary" onclick="loadTutorSection('attendance')">Registrar Asistencia</button>
-                <button class="btn btn-secondary" onclick="loadTutorSection('grades')">Gestión de Calificaciones</button>
-                <button class="btn btn-secondary" onclick="loadTutorSection('reports')">Reportes</button>
-                <button class="btn btn-danger" onclick="logout()">Cerrar Sesión</button>
+            <div class="mb-3">
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadTutorSection('attendance')">Registrar Asistencia</button>
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadTutorSection('grades')">Gestión de Calificaciones</button>
+                <button class="btn btn-secondary me-2 mb-2" onclick="loadTutorSection('reports')">Reportes</button>
+                <button class="btn btn-danger mb-2" onclick="logout()">Cerrar Sesión</button>
             </div>
             <div id="tutor-content" class="mt-4"></div>
         </div>
     </div>
 
-        <!-- Panel de Administración - Aulas -->
-<div id="admin-content">
-    <!-- Aulas -->
+    <!-- Formularios y Secciones de Gestión Dentro de admin-content -->
+    <div id="academic-years-section" class="hidden">
+        <h3>Gestión de Años Académicos</h3>
+        <button class="btn btn-success mb-3" onclick="showAddAcademicYearForm()">Agregar Año Académico</button>
+        <div id="academic-years-list"></div>
+        <div id="academic-years-form" class="hidden">
+            <h4>Formulario de Año Académico</h4>
+            <form id="academic-year-form">
+                <input type="hidden" id="academic-year-id">
+                <div class="mb-3">
+                    <label for="anio" class="form-label">Año Académico</label>
+                    <input type="number" class="form-control" id="anio" required>
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="activo">
+                    <label class="form-check-label" for="activo">Año Académico Activo</label>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" onclick="hideAddAcademicYearForm()">Cancelar</button>
+            </form>
+        </div>
+    </div>
+
     <div id="aulas-section" class="hidden">
         <h3>Gestión de Aulas</h3>
         <button class="btn btn-success mb-3" onclick="showAddAulaForm()">Agregar Aula</button>
@@ -89,139 +110,875 @@
             </form>
         </div>
     </div>
-</div>
 
-<div id="estudiantes-section" class="hidden">
-    <h3>Gestión de Estudiantes</h3>
-    <button class="btn btn-success mb-3" onclick="showAddStudentForm()">Agregar Estudiante</button>
-    <div id="estudiantes-list"></div>
-    <div id="estudiantes-form" class="hidden">
-        <h4>Formulario de Estudiante</h4>
-        <form id="student-form">
-            <input type="hidden" id="student-id">
-            <div class="mb-3">
-                <label for="tipo-id" class="form-label">Tipo de Identificación</label>
-                <select id="tipo-id" class="form-select" required>
-                    <option value="TI">TI</option>
-                    <option value="CC">CC</option>
-                    <option value="RC">RC</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="id-estudiante" class="form-label">Número de Identificación</label>
-                <input type="text" class="form-control" id="id-estudiante" required>
-            </div>
-            <div class="mb-3">
-                <label for="primer-nombre" class="form-label">Primer Nombre</label>
-                <input type="text" class="form-control" id="primer-nombre" required>
-            </div>
-            <div class="mb-3">
-                <label for="primer-apellido" class="form-label">Primer Apellido</label>
-                <input type="text" class="form-control" id="primer-apellido" required>
-            </div>
-            <div class="mb-3">
-                <label for="grupo" class="form-label">Grupo</label>
-                <input type="number" class="form-control" id="grupo" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="button" class="btn btn-secondary" onclick="hideAddStudentForm()">Cancelar</button>
-        </form>
+    <div id="estudiantes-section" class="hidden">
+        <h3>Gestión de Estudiantes</h3>
+        <button class="btn btn-success mb-3" onclick="showAddStudentForm()">Agregar Estudiante</button>
+        <div id="estudiantes-list"></div>
+        <div id="estudiantes-form" class="hidden">
+            <h4>Formulario de Estudiante</h4>
+            <form id="student-form">
+                <input type="hidden" id="student-id">
+                <div class="mb-3">
+                    <label for="tipo-id" class="form-label">Tipo de Identificación</label>
+                    <select id="tipo-id" class="form-select" required>
+                        <option value="TI">TI</option>
+                        <option value="CC">CC</option>
+                        <option value="RC">RC</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="id-estudiante" class="form-label">Número de Identificación</label>
+                    <input type="text" class="form-control" id="id-estudiante" required>
+                </div>
+                <div class="mb-3">
+                    <label for="primer-nombre" class="form-label">Primer Nombre</label>
+                    <input type="text" class="form-control" id="primer-nombre" required>
+                </div>
+                <div class="mb-3">
+                    <label for="primer-apellido" class="form-label">Primer Apellido</label>
+                    <input type="text" class="form-control" id="primer-apellido" required>
+                </div>
+                <div class="mb-3">
+                    <label for="grupo" class="form-label">Grupo</label>
+                    <input type="number" class="form-control" id="grupo" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" onclick="hideAddStudentForm()">Cancelar</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<div id="horarios-section" class="hidden">
-    <h3>Gestión de Horarios</h3>
-    <button class="btn btn-success mb-3" onclick="showAddScheduleForm()">Agregar Horario</button>
-    <div id="horarios-list"></div>
-    <div id="horarios-form" class="hidden">
-        <h4>Formulario de Horario</h4>
-        <form id="schedule-form">
-            <div class="mb-3">
-                <label for="hora-inicio" class="form-label">Hora Inicio</label>
-                <input type="time" class="form-control" id="hora-inicio" required>
-            </div>
-            <div class="mb-3">
-                <label for="hora-fin" class="form-label">Hora Fin</label>
-                <input type="time" class="form-control" id="hora-fin" required>
-            </div>
-            <div class="mb-3">
-                <label for="dia-texto" class="form-label">Día de la Semana</label>
-                <input type="text" class="form-control" id="dia-texto" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="button" class="btn btn-secondary" onclick="hideAddScheduleForm()">Cancelar</button>
-        </form>
+    <div id="horarios-section" class="hidden">
+        <h3>Gestión de Horarios</h3>
+        <button class="btn btn-success mb-3" onclick="showAddScheduleForm()">Agregar Horario</button>
+        <div id="horarios-list"></div>
+        <div id="horarios-form" class="hidden">
+            <h4>Formulario de Horario</h4>
+            <form id="schedule-form">
+                <div class="mb-3">
+                    <label for="hora-inicio" class="form-label">Hora Inicio</label>
+                    <input type="time" class="form-control" id="hora-inicio" required>
+                </div>
+                <div class="mb-3">
+                    <label for="hora-fin" class="form-label">Hora Fin</label>
+                    <input type="time" class="form-control" id="hora-fin" required>
+                </div>
+                <div class="mb-3">
+                    <label for="dia-texto" class="form-label">Día de la Semana</label>
+                    <input type="text" class="form-control" id="dia-texto" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" onclick="hideAddScheduleForm()">Cancelar</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<div id="calificaciones-section" class="hidden">
-    <h3>Gestión de Calificaciones</h3>
-    <button class="btn btn-success mb-3" onclick="showAddGradeForm()">Registrar Calificación</button>
-    <div id="calificaciones-list"></div>
-    <div id="calificaciones-form" class="hidden">
-        <h4>Formulario de Calificación</h4>
-        <form id="grade-form">
-            <div class="mb-3">
-                <label for="id-estudiante" class="form-label">ID del Estudiante</label>
-                <input type="text" class="form-control" id="id-estudiante" required>
-            </div>
-            <div class="mb-3">
-                <label for="bloque-lectivo" class="form-label">Bloque Lectivo</label>
-                <select id="bloque-lectivo" class="form-select" required>
-                    <option value="1">Bloque 1</option>
-                    <option value="2">Bloque 2</option>
-                    <option value="3">Bloque 3</option>
-                    <option value="4">Bloque 4</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="nota" class="form-label">Nota</label>
-                <input type="number" class="form-control" id="nota" min="0" max="5" step="0.1" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="button" class="btn btn-secondary" onclick="hideAddGradeForm()">Cancelar</button>
-        </form>
+    <div id="calificaciones-section" class="hidden">
+        <h3>Gestión de Calificaciones</h3>
+        <button class="btn btn-success mb-3" onclick="showAddGradeForm()">Registrar Calificación</button>
+        <div id="calificaciones-list"></div>
+        <div id="calificaciones-form" class="hidden">
+            <h4>Formulario de Calificación</h4>
+            <form id="grade-form">
+                <div class="mb-3">
+                    <label for="id-estudiante" class="form-label">ID del Estudiante</label>
+                    <input type="text" class="form-control" id="id-estudiante" required>
+                </div>
+                <div class="mb-3">
+                    <label for="bloque-lectivo" class="form-label">Bloque Lectivo</label>
+                    <select id="bloque-lectivo" class="form-select" required>
+                        <option value="1">Bloque 1</option>
+                        <option value="2">Bloque 2</option>
+                        <option value="3">Bloque 3</option>
+                        <option value="4">Bloque 4</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="nota" class="form-label">Nota</label>
+                    <input type="number" class="form-control" id="nota" min="0" max="5" step="0.1" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="button" class="btn btn-secondary" onclick="hideAddGradeForm()">Cancelar</button>
+            </form>
+        </div>
     </div>
-</div>
 
-<div id="reportes-section" class="hidden">
-    <h3>Reportes</h3>
-    <button class="btn btn-info mb-3" onclick="loadReport('aulas')">Reporte de Aulas</button>
-    <button class="btn btn-info mb-3" onclick="loadReport('asistencia-estudiantes')">Asistencia de Estudiantes</button>
-    <button class="btn btn-info mb-3" onclick="loadReport('asistencia-tutores')">Asistencia de Tutores</button>
-    <div id="reportes-content"></div>
-</div>
-
-
-
+    <div id="reportes-section" class="hidden">
+        <h3>Reportes</h3>
+        <button class="btn btn-info mb-3" onclick="loadReport('aulas')">Reporte de Aulas</button>
+        <button class="btn btn-info mb-3" onclick="loadReport('asistencia-estudiantes')">Asistencia de Estudiantes</button>
+        <button class="btn btn-info mb-3" onclick="loadReport('asistencia-tutores')">Asistencia de Tutores</button>
+        <div id="reportes-content"></div>
+    </div>
 
     <script>
-
+        // Configuración de Axios con Interceptores para Autenticación
         const apiUrl = 'http://127.0.0.1:5000'; // Cambiar según configuración del servidor
 
+        const axiosInstance = axios.create({
+            baseURL: apiUrl,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Interceptor para agregar el token en cada solicitud
+        axiosInstance.interceptors.request.use(
+            (config) => {
+                const token = localStorage.getItem('token');
+                if (token) {
+                    config.headers['Authorization'] = `Bearer ${token}`;
+                }
+                return config;
+            },
+            (error) => {
+                return Promise.reject(error);
+            }
+        );
+
+        // Inicio de sesión
+        document.getElementById('login-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const identificacion = document.getElementById('identificacion').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await axiosInstance.post('/obtener-rol', { identificacion, password });
+                const roles = response.data.roles;
+                const token = response.data.token; // Suponiendo que el backend retorna un token
+
+                // Almacenar el token y el rol en localStorage
+                localStorage.setItem('token', token);
+                if (roles.includes('Administrador')) {
+                    localStorage.setItem('userRole', 'Administrador');
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('admin-panel').classList.remove('hidden');
+                } else if (roles.includes('Tutor')) {
+                    localStorage.setItem('userRole', 'Tutor');
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('tutor-panel').classList.remove('hidden');
+                } else {
+                    alert('Rol no reconocido.');
+                }
+            } catch (error) {
+                alert('Error de autenticación: ' + (error.response?.data?.error || error.message));
+            }
+        });
+
+        // Cerrar sesión
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('userRole');
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+            document.getElementById('tutor-panel').classList.add('hidden');
+            document.getElementById('admin-content').innerHTML = '';
+            document.getElementById('tutor-content').innerHTML = '';
+        }
+
+        // Verificar Autenticación al Cargar la Página
+        window.onload = function() {
+            const token = localStorage.getItem('token');
+            const userRole = localStorage.getItem('userRole');
+
+            if (token && userRole === 'Administrador') {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+            } else if (token && userRole === 'Tutor') {
+                document.getElementById('login-section').classList.add('hidden');
+                document.getElementById('tutor-panel').classList.remove('hidden');
+            } else {
+                document.getElementById('login-section').classList.remove('hidden');
+                document.getElementById('admin-panel').classList.add('hidden');
+                document.getElementById('tutor-panel').classList.add('hidden');
+            }
+        };
+
+        // Función para cargar diferentes secciones en el Panel de Administración
+        async function loadAdminSection(section) {
+            const content = document.getElementById('admin-content');
+            content.innerHTML = `<h3>Cargando ${getSectionName(section)}...</h3>`;
+
+            if (section === 'users') await loadUsers(content);
+            if (section === 'institutions') await loadInstitutions(content);
+            if (section === 'classes') await loadClasses(content);
+            if (section === 'students') await loadStudents(content);
+            if (section === 'schedules') await loadSchedules(content);
+            if (section === 'grades') await loadGrades(content);
+            if (section === 'reports') await loadReports(content);
+            if (section === 'academic-years') await loadAcademicYears(content); // Nueva Condición
+        }
+
+        // Función para cargar diferentes secciones en el Panel del Tutor
+        async function loadTutorSection(section) {
+            const content = document.getElementById('tutor-content');
+            content.innerHTML = `<h3>Cargando ${getTutorSectionName(section)}...</h3>`;
+            // Implementar las funciones correspondientes para el tutor
+            if (section === 'attendance') await loadAttendance(content);
+            if (section === 'grades') await loadTutorGrades(content);
+            if (section === 'reports') await loadTutorReports(content);
+        }
+
+        // Helper para nombres de secciones
+        function getSectionName(section) {
+            const names = {
+                'users': 'Usuarios',
+                'institutions': 'Instituciones',
+                'classes': 'Aulas',
+                'students': 'Estudiantes',
+                'schedules': 'Horarios',
+                'grades': 'Calificaciones',
+                'reports': 'Reportes',
+                'academic-years': 'Años Académicos'
+            };
+            return names[section] || section;
+        }
+
+        function getTutorSectionName(section) {
+            const names = {
+                'attendance': 'Asistencia',
+                'grades': 'Calificaciones',
+                'reports': 'Reportes'
+            };
+            return names[section] || section;
+        }
+
+        // CRUD de Usuarios
+        async function loadUsers(content) {
+            try {
+                const response = await axiosInstance.get('/reporte-usuarios');
+                const users = response.data.reporte;
+
+                let table = '<h3>Gestión de Usuarios</h3><table class="table table-striped">';
+                table += '<thead><tr><th>Nombre Completo</th><th>Rol</th><th>Correo</th><th>Teléfono</th><th>Acciones</th></tr></thead><tbody>';
+                users.forEach(user => {
+                    table += `
+                        <tr>
+                            <td>${user.nombre_completo}</td>
+                            <td>${user.rol}</td>
+                            <td>${user.correo}</td>
+                            <td>${user.telefono}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning me-1" onclick="editUser('${user.id}')">Editar</button>
+                                <button class="btn btn-sm btn-danger me-1" onclick="deleteUser('${user.id}')">Eliminar</button>
+                            </td>
+                        </tr>`;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar usuarios.</p>';
+            }
+        }
+
+        // CRUD de Instituciones
+        async function loadInstitutions(content) {
+            try {
+                const response = await axiosInstance.get('/reporte-instituciones');
+                const institutions = response.data.reporte;
+
+                let table = '<h3>Gestión de Instituciones</h3><table class="table table-striped">';
+                table += '<thead><tr><th>Nombre</th><th>Rector</th><th>Dirección</th><th>Barrio</th><th>Acciones</th></tr></thead><tbody>';
+                institutions.forEach(inst => {
+                    table += `
+                        <tr>
+                            <td>${inst.nombre}</td>
+                            <td>${inst.rector}</td>
+                            <td>${inst.direccion}</td>
+                            <td>${inst.barrio}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning me-1" onclick="editInstitution('${inst.id}')">Editar</button>
+                                <button class="btn btn-sm btn-danger me-1" onclick="deleteInstitution('${inst.id}')">Eliminar</button>
+                            </td>
+                        </tr>`;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar instituciones.</p>';
+            }
+        }
+
+        // CRUD de Aulas
+        async function loadClasses(content) {
+            try {
+                const response = await axiosInstance.get('/reporte-aulas');
+                const aulas = response.data.reporte;
+
+                let table = '<h3>Gestión de Aulas</h3><table class="table table-striped">';
+                table += `
+                    <thead>
+                        <tr>
+                            <th>Grupo</th>
+                            <th>Grado</th>
+                            <th>Jornada</th>
+                            <th>Tutor</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+                aulas.forEach(aula => {
+                    table += `
+                        <tr>
+                            <td>${aula.grupo}</td>
+                            <td>${aula.grado_t} (${aula.grado_num})</td>
+                            <td>${aula.jornada}</td>
+                            <td>${aula.tutor}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning me-1" onclick="editAula('${aula.grupo}')">Editar</button>
+                                <button class="btn btn-sm btn-danger me-1" onclick="deleteAula('${aula.grupo}')">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar las aulas.</p>';
+            }
+        }
+
+        function showAddAulaForm() {
+            document.getElementById('aulas-form').classList.remove('hidden');
+            document.getElementById('aulas-list').classList.add('hidden');
+            document.getElementById('aula-form').reset();
+            document.getElementById('aula-grupo').value = '';
+        }
+
+        function hideAddAulaForm() {
+            document.getElementById('aulas-form').classList.add('hidden');
+            document.getElementById('aulas-list').classList.remove('hidden');
+        }
+
+        async function addAula(event) {
+            event.preventDefault();
+            const grupo = document.getElementById('aula-grupo').value;
+            const grado_t = document.getElementById('grado-t').value;
+            const grado_num = document.getElementById('grado-num').value;
+            const grupo_equivalente = document.getElementById('grupo-equiv').value;
+            const jornada = document.getElementById('jornada').value;
+            const codigo_insti = document.getElementById('codigo-insti')?.value || 1; // Reemplazar con datos reales
+            const id_usuario = document.getElementById('id-usuario')?.value || 1; // Reemplazar con datos reales
+
+            const data = {
+                grupo: grupo,
+                grado_t: grado_t,
+                grado_num: grado_num,
+                grupo_equivalente: grupo_equivalente,
+                jornada: jornada,
+                codigo_insti: codigo_insti,
+                id_usuario: id_usuario
+            };
+
+            try {
+                if (grupo) {
+                    // Actualizar Aula
+                    await axiosInstance.put(`/aulas/actualizar/${grupo}`, data);
+                    alert('Aula actualizada exitosamente');
+                } else {
+                    // Agregar Nueva Aula
+                    await axiosInstance.post('/aulas/agregar', data);
+                    alert('Aula agregada exitosamente');
+                }
+                hideAddAulaForm();
+                loadClasses(document.getElementById('admin-content'));
+            } catch (error) {
+                alert('Error al guardar el aula.');
+            }
+        }
+
+        async function deleteAula(grupo) {
+            if (confirm(`¿Estás seguro de eliminar el aula con grupo ${grupo}?`)) {
+                try {
+                    await axiosInstance.delete(`/aulas/eliminar/${grupo}`);
+                    alert('Aula eliminada exitosamente');
+                    loadClasses(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar el aula.');
+                }
+            }
+        }
+
+        async function editAula(grupo) {
+            try {
+                const response = await axiosInstance.get(`/aulas/${grupo}`);
+                const aula = response.data;
+
+                showAddAulaForm();
+                document.getElementById('aula-grupo').value = aula.grupo;
+                document.getElementById('grado-t').value = aula.grado_t;
+                document.getElementById('grado-num').value = aula.grado_num;
+                document.getElementById('grupo-equiv').value = aula.grupo_equivalente;
+                document.getElementById('jornada').value = aula.jornada;
+            } catch (error) {
+                alert('Error al cargar el aula para edición.');
+            }
+        }
+
+        // CRUD de Estudiantes
+        async function loadStudents(content) {
+            try {
+                const response = await axiosInstance.get('/reporte-estudiantes-aula', {
+                    params: { grupo: 1 } // Reemplazar con el grupo seleccionado
+                });
+                const estudiantes = response.data.reporte;
+
+                let table = '<h3>Gestión de Estudiantes</h3><table class="table table-striped">';
+                table += '<thead><tr><th>ID</th><th>Nombre</th><th>Grupo</th><th>Acciones</th></tr></thead><tbody>';
+                estudiantes.forEach(estudiante => {
+                    table += `
+                        <tr>
+                            <td>${estudiante.id_estudiante}</td>
+                            <td>${estudiante.nombre_completo}</td>
+                            <td>${estudiante.grupo}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning me-1" onclick="editStudent('${estudiante.id_estudiante}')">Editar</button>
+                                <button class="btn btn-sm btn-danger me-1" onclick="deleteStudent('${estudiante.id_estudiante}')">Eliminar</button>
+                            </td>
+                        </tr>`;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar estudiantes.</p>';
+            }
+        }
+
+        function showAddStudentForm() {
+            document.getElementById('estudiantes-form').classList.remove('hidden');
+            document.getElementById('estudiantes-list').classList.add('hidden');
+            document.getElementById('student-form').reset();
+            document.getElementById('student-id').value = '';
+        }
+
+        function hideAddStudentForm() {
+            document.getElementById('estudiantes-form').classList.add('hidden');
+            document.getElementById('estudiantes-list').classList.remove('hidden');
+        }
+
+        async function addStudent(event) {
+            event.preventDefault();
+            const id = document.getElementById('student-id').value;
+            const tipo_id = document.getElementById('tipo-id').value;
+            const id_estudiante = document.getElementById('id-estudiante').value;
+            const primer_nombre = document.getElementById('primer-nombre').value;
+            const primer_apellido = document.getElementById('primer-apellido').value;
+            const grupo = document.getElementById('grupo').value;
+
+            const data = {
+                tipo_id: tipo_id,
+                id_estudiante: id_estudiante,
+                primer_nombre: primer_nombre,
+                primer_apellido: primer_apellido,
+                grupo: grupo,
+                anio: new Date().getFullYear() // Año actual
+            };
+
+            try {
+                if (id) {
+                    // Actualizar Estudiante
+                    await axiosInstance.put(`/estudiantes/actualizar/${id}`, data);
+                    alert('Estudiante actualizado exitosamente');
+                } else {
+                    // Agregar Nuevo Estudiante
+                    await axiosInstance.post('/estudiantes/agregar', data);
+                    alert('Estudiante agregado exitosamente');
+                }
+                hideAddStudentForm();
+                loadStudents(document.getElementById('admin-content'));
+            } catch (error) {
+                alert('Error al guardar el estudiante.');
+            }
+        }
+
+        async function deleteStudent(idEstudiante) {
+            if (confirm(`¿Estás seguro de eliminar al estudiante con ID ${idEstudiante}?`)) {
+                try {
+                    await axiosInstance.delete(`/estudiantes/eliminar/${idEstudiante}`);
+                    alert('Estudiante eliminado exitosamente');
+                    loadStudents(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar al estudiante.');
+                }
+            }
+        }
+
+        async function editStudent(idEstudiante) {
+            try {
+                const response = await axiosInstance.get(`/estudiantes/${idEstudiante}`);
+                const estudiante = response.data;
+
+                showAddStudentForm();
+                document.getElementById('student-id').value = estudiante.id_estudiante;
+                document.getElementById('tipo-id').value = estudiante.tipo_id;
+                document.getElementById('id-estudiante').value = estudiante.id_estudiante;
+                document.getElementById('primer-nombre').value = estudiante.primer_nombre;
+                document.getElementById('primer-apellido').value = estudiante.primer_apellido;
+                document.getElementById('grupo').value = estudiante.grupo;
+            } catch (error) {
+                alert('Error al cargar datos del estudiante.');
+            }
+        }
+
+        // CRUD de Horarios
+        async function loadSchedules(content) {
+            try {
+                const response = await axiosInstance.get('/horarios', {
+                    params: { id_usuario: 1 } // Reemplazar con datos reales
+                });
+                const horarios = response.data.reporte;
+
+                let table = '<h3>Gestión de Horarios</h3><table class="table table-striped">';
+                table += `
+                    <thead>
+                        <tr>
+                            <th>Día</th>
+                            <th>Hora Inicio</th>
+                            <th>Hora Fin</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+                horarios.forEach(horario => {
+                    table += `
+                        <tr>
+                            <td>${horario.dia}</td>
+                            <td>${horario.hora_inicio}</td>
+                            <td>${horario.hora_fin}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning me-1" onclick="editSchedule('${horario.codigo_horario}')">Editar</button>
+                                <button class="btn btn-sm btn-danger me-1" onclick="deleteSchedule('${horario.codigo_horario}')">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar horarios.</p>';
+            }
+        }
+
+        function showAddScheduleForm() {
+            document.getElementById('horarios-form').classList.remove('hidden');
+            document.getElementById('horarios-list').classList.add('hidden');
+            document.getElementById('schedule-form').reset();
+        }
+
+        function hideAddScheduleForm() {
+            document.getElementById('horarios-form').classList.add('hidden');
+            document.getElementById('horarios-list').classList.remove('hidden');
+        }
+
+        async function addSchedule(event) {
+            event.preventDefault();
+            const codigo_horario = document.getElementById('codigo-horario')?.value || '';
+            const hora_inicio = document.getElementById('hora-inicio').value;
+            const hora_fin = document.getElementById('hora-fin').value;
+            const dia_texto = document.getElementById('dia-texto').value;
+
+            const data = {
+                hora_inicio: hora_inicio,
+                hora_fin: hora_fin,
+                dia: dia_texto
+            };
+
+            try {
+                if (codigo_horario) {
+                    // Actualizar Horario
+                    await axiosInstance.put(`/horarios/actualizar/${codigo_horario}`, data);
+                    alert('Horario actualizado exitosamente');
+                } else {
+                    // Agregar Nuevo Horario
+                    await axiosInstance.post('/horarios/agregar', data);
+                    alert('Horario agregado exitosamente');
+                }
+                hideAddScheduleForm();
+                loadSchedules(document.getElementById('admin-content'));
+            } catch (error) {
+                alert('Error al guardar el horario.');
+            }
+        }
+
+        async function deleteSchedule(codigo_horario) {
+            if (confirm(`¿Estás seguro de eliminar el horario con código ${codigo_horario}?`)) {
+                try {
+                    await axiosInstance.delete(`/horarios/eliminar/${codigo_horario}`);
+                    alert('Horario eliminado exitosamente');
+                    loadSchedules(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar el horario.');
+                }
+            }
+        }
+
+        async function editSchedule(codigo_horario) {
+            try {
+                const response = await axiosInstance.get(`/horarios/${codigo_horario}`);
+                const horario = response.data;
+
+                showAddScheduleForm();
+                document.getElementById('codigo-horario').value = horario.codigo_horario;
+                document.getElementById('hora-inicio').value = horario.hora_inicio;
+                document.getElementById('hora-fin').value = horario.hora_fin;
+                document.getElementById('dia-texto').value = horario.dia;
+            } catch (error) {
+                alert('Error al cargar el horario para edición.');
+            }
+        }
+
+        // CRUD de Calificaciones
+        async function loadGrades(content) {
+            try {
+                const response = await axiosInstance.get('/calificaciones', {
+                    params: { grupo: 1, anio: new Date().getFullYear() } // Reemplazar con datos reales
+                });
+                const calificaciones = response.data.reporte;
+
+                let table = '<h3>Gestión de Calificaciones</h3><table class="table table-striped">';
+                table += '<thead><tr><th>ID Estudiante</th><th>Nombre</th><th>Bloque</th><th>Nota</th><th>Acciones</th></tr></thead><tbody>';
+                calificaciones.forEach(calificacion => {
+                    table += `
+                        <tr>
+                            <td>${calificacion.id_estudiante}</td>
+                            <td>${calificacion.nombre}</td>
+                            <td>${calificacion.bloque_lectivo}</td>
+                            <td>${calificacion.nota}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning me-1" onclick="editGrade('${calificacion.id_estudiante}', '${calificacion.bloque_lectivo}')">Editar</button>
+                                <button class="btn btn-sm btn-danger me-1" onclick="deleteGrade('${calificacion.id_estudiante}', '${calificacion.bloque_lectivo}')">Eliminar</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar calificaciones.</p>';
+            }
+        }
+
+        function showAddGradeForm() {
+            document.getElementById('calificaciones-form').classList.remove('hidden');
+            document.getElementById('calificaciones-list').classList.add('hidden');
+            document.getElementById('grade-form').reset();
+        }
+
+        function hideAddGradeForm() {
+            document.getElementById('calificaciones-form').classList.add('hidden');
+            document.getElementById('calificaciones-list').classList.remove('hidden');
+        }
+
+        document.getElementById('grade-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const id_estudiante = document.getElementById('id-estudiante').value;
+            const bloque_lectivo = document.getElementById('bloque-lectivo').value;
+            const nota = document.getElementById('nota').value;
+
+            const data = {
+                id_estudiante: id_estudiante,
+                bloque_lectivo: bloque_lectivo,
+                nota: parseFloat(nota)
+            };
+
+            try {
+                // Verificar si ya existe una calificación para este estudiante y bloque
+                const existing = await axiosInstance.get(`/calificaciones/${id_estudiante}/${bloque_lectivo}`);
+                if (existing.data.exists) {
+                    if (confirm('Ya existe una calificación para este estudiante y bloque. ¿Deseas actualizarla?')) {
+                        await axiosInstance.put(`/calificaciones/actualizar/${id_estudiante}/${bloque_lectivo}`, data);
+                        alert('Calificación actualizada exitosamente');
+                    }
+                } else {
+                    // Agregar Nueva Calificación
+                    await axiosInstance.post('/calificaciones/agregar', data);
+                    alert('Calificación agregada exitosamente');
+                }
+                hideAddGradeForm();
+                loadGrades(document.getElementById('admin-content'));
+            } catch (error) {
+                alert('Error al guardar la calificación.');
+            }
+        });
+
+        async function deleteGrade(id_estudiante, bloque_lectivo) {
+            if (confirm(`¿Estás seguro de eliminar la calificación del estudiante ${id_estudiante} en el Bloque ${bloque_lectivo}?`)) {
+                try {
+                    await axiosInstance.delete(`/calificaciones/eliminar/${id_estudiante}/${bloque_lectivo}`);
+                    alert('Calificación eliminada exitosamente');
+                    loadGrades(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar la calificación.');
+                }
+            }
+        }
+
+        async function editGrade(id_estudiante, bloque_lectivo) {
+            try {
+                const response = await axiosInstance.get(`/calificaciones/${id_estudiante}/${bloque_lectivo}`);
+                const calificacion = response.data;
+
+                showAddGradeForm();
+                document.getElementById('id-estudiante').value = calificacion.id_estudiante;
+                document.getElementById('bloque-lectivo').value = calificacion.bloque_lectivo;
+                document.getElementById('nota').value = calificacion.nota;
+            } catch (error) {
+                alert('Error al cargar la calificación para edición.');
+            }
+        }
+
+        // CRUD de Años Académicos
+        async function loadAcademicYears(content) {
+            try {
+                const response = await axiosInstance.get('/reporte-anios-academicos');
+                const anios = response.data.reporte;
+
+                let table = '<h3>Lista de Años Académicos</h3><table class="table table-striped">';
+                table += `
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Año Académico</th>
+                            <th>Activo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+                anios.forEach(anio => {
+                    table += `
+                        <tr>
+                            <td>${anio.id}</td>
+                            <td>${anio.anio}</td>
+                            <td>${anio.activo ? 'Sí' : 'No'}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning me-1" onclick="editAcademicYear('${anio.id}')">Editar</button>
+                                <button class="btn btn-sm btn-danger me-1" onclick="deleteAcademicYear('${anio.id}')">Eliminar</button>
+                                ${!anio.activo ? `<button class="btn btn-sm btn-success" onclick="activateAcademicYear('${anio.id}')">Activar</button>` : ''}
+                            </td>
+                        </tr>
+                    `;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar los años académicos.</p>';
+            }
+        }
+
+        function showAddAcademicYearForm() {
+            document.getElementById('academic-years-form').classList.remove('hidden');
+            document.getElementById('academic-years-list').classList.add('hidden');
+            document.getElementById('academic-year-form').reset();
+            document.getElementById('academic-year-id').value = '';
+        }
+
+        function hideAddAcademicYearForm() {
+            document.getElementById('academic-years-form').classList.add('hidden');
+            document.getElementById('academic-years-list').classList.remove('hidden');
+        }
+
+        document.getElementById('academic-year-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const id = document.getElementById('academic-year-id').value;
+            const anio = document.getElementById('anio').value;
+            const activo = document.getElementById('activo').checked;
+
+            const data = {
+                anio: parseInt(anio),
+                activo: activo
+            };
+
+            try {
+                if (id) {
+                    // Actualizar Año Académico
+                    await axiosInstance.put(`/actualizar-anio-academico/${id}`, data);
+                    alert('Año académico actualizado exitosamente.');
+                } else {
+                    // Agregar Nuevo Año Académico
+                    await axiosInstance.post('/agregar-anio-academico', data);
+                    alert('Año académico agregado exitosamente.');
+                }
+                hideAddAcademicYearForm();
+                loadAcademicYears(document.getElementById('admin-content'));
+            } catch (error) {
+                alert('Error al guardar el año académico.');
+            }
+        });
+
+        async function editAcademicYear(id) {
+            try {
+                const response = await axiosInstance.get(`/años-academicos/${id}`);
+                const anio = response.data;
+
+                showAddAcademicYearForm();
+                document.getElementById('academic-year-id').value = anio.id;
+                document.getElementById('anio').value = anio.anio;
+                document.getElementById('activo').checked = anio.activo;
+            } catch (error) {
+                alert('Error al cargar los datos del año académico.');
+            }
+        }
+
+        async function deleteAcademicYear(id) {
+            if (confirm(`¿Estás seguro de eliminar el año académico con ID ${id}?`)) {
+                try {
+                    await axiosInstance.delete(`/eliminar-anio-academico/${id}`);
+                    alert('Año académico eliminado exitosamente.');
+                    loadAcademicYears(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar el año académico.');
+                }
+            }
+        }
+
+        async function activateAcademicYear(id) {
+            if (confirm(`¿Estás seguro de activar el año académico con ID ${id}? Esto desactivará cualquier otro año activo.`)) {
+                try {
+                    await axiosInstance.put(`/activar-anio-academico/${id}`);
+                    alert('Año académico activado exitosamente.');
+                    loadAcademicYears(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al activar el año académico.');
+                }
+            }
+        }
+
+        // Funciones para Reportes
+        async function loadReports(content) {
+            try {
+                // Implementar la lógica para cargar reportes según las necesidades
+                content.innerHTML = '<p>Funcionalidad de reportes en desarrollo.</p>';
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar reportes.</p>';
+            }
+        }
 
         async function loadReport(type) {
             const content = document.getElementById('reportes-content');
             content.innerHTML = '<h3>Cargando reporte...</h3>';
-        
+
             try {
                 let endpoint = '';
                 let params = {};
-        
+
                 if (type === 'aulas') {
-                    endpoint = `${apiUrl}/generar_reporte_aulas`;
+                    endpoint = '/generar_reporte_aulas';
                 } else if (type === 'asistencia-estudiantes') {
-                    endpoint = `${apiUrl}/asistencias-aula`;
+                    endpoint = '/asistencias-estudiantes';
                     params = { grupo: 1 }; // Reemplazar con datos reales
                 } else if (type === 'asistencia-tutores') {
-                    endpoint = `${apiUrl}/asistencias-usuarios`;
+                    endpoint = '/asistencias-tutores';
                     params = { grupo: 1 }; // Reemplazar con datos reales
                 }
-        
-                const response = await axios.get(endpoint, { params });
+
+                const response = await axiosInstance.get(endpoint, { params });
                 const reporte = response.data.reporte;
-        
-                let table = '<table class="table">';
+
+                let table = '<table class="table table-striped">';
                 if (type === 'aulas') {
                     table += '<thead><tr><th>Grupo</th><th>Grado</th><th>Institución</th><th>Tutor</th></tr></thead><tbody>';
                     reporte.forEach(aula => {
@@ -239,10 +996,10 @@
                         table += `
                             <tr>
                                 <td>${asistencia.fecha}</td>
-                                <td>${asistencia.estudiante || asistencia.usuario}</td>
+                                <td>${asistencia.nombre}</td>
                                 <td>${asistencia.dia}</td>
                                 <td>${asistencia.hora_inicio}</td>
-                                <td>${asistencia.asistio}</td>
+                                <td>${asistencia.asistio ? 'Sí' : 'No'}</td>
                             </tr>`;
                     });
                 }
@@ -252,376 +1009,33 @@
                 content.innerHTML = '<p>Error al cargar el reporte.</p>';
             }
         }
-        
 
-        async function loadGrades(content) {
-            content.innerHTML = '<h3>Cargando calificaciones...</h3>';
+        // Funciones para el Panel del Tutor (Implementar según necesidades)
+        async function loadAttendance(content) {
+            // Implementar la lógica para registrar asistencia
+            content.innerHTML = '<p>Funcionalidad de registro de asistencia en desarrollo.</p>';
+        }
+
+        async function loadTutorGrades(content) {
+            // Implementar la lógica para gestionar calificaciones desde el panel del tutor
+            content.innerHTML = '<p>Funcionalidad de gestión de calificaciones del tutor en desarrollo.</p>';
+        }
+
+        async function loadTutorReports(content) {
+            // Implementar la lógica para cargar reportes desde el panel del tutor
+            content.innerHTML = '<p>Funcionalidad de reportes del tutor en desarrollo.</p>';
+        }
+
+        // CRUD de Reportes (Placeholder - Implementar según necesidades)
+        async function loadReports(content) {
             try {
-                const response = await axios.get(`${apiUrl}/calificaciones-aula`, {
-                    params: { grupo: 1, anio: new Date().getFullYear() } // Reemplazar con datos reales
-                });
-                const calificaciones = response.data.reporte;
-        
-                let table = '<table class="table">';
-                table += '<thead><tr><th>ID Estudiante</th><th>Nombre</th><th>Bloque</th><th>Nota</th></tr></thead><tbody>';
-                calificaciones.forEach(calificacion => {
-                    table += `
-                        <tr>
-                            <td>${calificacion.id_estudiante}</td>
-                            <td>${calificacion.nombre}</td>
-                            <td>${calificacion.bloque_lectivo}</td>
-                            <td>${calificacion.nota}</td>
-                        </tr>`;
-                });
-                table += '</tbody></table>';
-                content.innerHTML = table;
+                // Implementar la lógica para cargar diferentes tipos de reportes
+                content.innerHTML = '<p>Funcionalidad de reportes en desarrollo.</p>';
             } catch (error) {
-                content.innerHTML = '<p>Error al cargar calificaciones.</p>';
+                content.innerHTML = '<p>Error al cargar reportes.</p>';
             }
-        }
-        
-        function showAddGradeForm() {
-            document.getElementById('calificaciones-form').classList.remove('hidden');
-            document.getElementById('calificaciones-list').classList.add('hidden');
-        }
-        
-        function hideAddGradeForm() {
-            document.getElementById('calificaciones-form').classList.add('hidden');
-            document.getElementById('calificaciones-list').classList.remove('hidden');
-            document.getElementById('grade-form').reset();
-        }
-        
-        async function addGrade(event) {
-            event.preventDefault();
-            const data = {
-                id_estudiante: document.getElementById('id-estudiante').value,
-                bloque_lectivo: document.getElementById('bloque-lectivo').value,
-                nota: document.getElementById('nota').value
-            };
-        
-            try {
-                await axios.post(`${apiUrl}/calificar-estudiante`, data);
-                alert('Calificación registrada exitosamente');
-                hideAddGradeForm();
-                loadGrades(document.getElementById('admin-content'));
-            } catch (error) {
-                alert('Error al registrar la calificación.');
-            }
-        }
-        
-
-        async function loadSchedules(content) {
-            content.innerHTML = '<h3>Cargando horarios...</h3>';
-            try {
-                const response = await axios.get(`${apiUrl}/generar_horario_tutor`, {
-                    params: { id_usuario: 1 } // Reemplazar con datos reales
-                });
-                const horarios = response.data.reporte;
-        
-                let table = '<table class="table">';
-                table += '<thead><tr><th>Día</th><th>Hora Inicio</th><th>Hora Fin</th><th>Acciones</th></tr></thead><tbody>';
-                horarios.forEach(horario => {
-                    table += `
-                        <tr>
-                            <td>${horario.dia}</td>
-                            <td>${horario.hora_inicio}</td>
-                            <td>${horario.hora_fin}</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning" onclick="editSchedule(${horario.codigo_horario})">Editar</button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteSchedule(${horario.codigo_horario})">Eliminar</button>
-                            </td>
-                        </tr>`;
-                });
-                table += '</tbody></table>';
-                content.innerHTML = table;
-            } catch (error) {
-                content.innerHTML = '<p>Error al cargar horarios.</p>';
-            }
-        }
-        
-        function showAddScheduleForm() {
-            document.getElementById('horarios-form').classList.remove('hidden');
-            document.getElementById('horarios-list').classList.add('hidden');
-        }
-        
-        function hideAddScheduleForm() {
-            document.getElementById('horarios-form').classList.add('hidden');
-            document.getElementById('horarios-list').classList.remove('hidden');
-            document.getElementById('schedule-form').reset();
-        }
-        
-
-        async function loadStudents(content) {
-            content.innerHTML = '<h3>Cargando estudiantes...</h3>';
-            try {
-                const response = await axios.get(`${apiUrl}/reporte-estudiantes-aula`, {
-                    params: { grupo: 1 } // Reemplazar con el grupo seleccionado
-                });
-                const estudiantes = response.data.reporte;
-        
-                let table = '<table class="table">';
-                table += '<thead><tr><th>ID</th><th>Nombre</th><th>Grupo</th><th>Acciones</th></tr></thead><tbody>';
-                estudiantes.forEach(estudiante => {
-                    table += `
-                        <tr>
-                            <td>${estudiante.id_estudiante}</td>
-                            <td>${estudiante.nombre_completo}</td>
-                            <td>${estudiante.grupo}</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning" onclick="editStudent('${estudiante.id_estudiante}')">Editar</button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteStudent('${estudiante.id_estudiante}')">Eliminar</button>
-                            </td>
-                        </tr>`;
-                });
-                table += '</tbody></table>';
-                content.innerHTML = table;
-            } catch (error) {
-                content.innerHTML = '<p>Error al cargar estudiantes.</p>';
-            }
-        }
-        
-        function showAddStudentForm() {
-            document.getElementById('estudiantes-form').classList.remove('hidden');
-            document.getElementById('estudiantes-list').classList.add('hidden');
-        }
-        
-        function hideAddStudentForm() {
-            document.getElementById('estudiantes-form').classList.add('hidden');
-            document.getElementById('estudiantes-list').classList.remove('hidden');
-            document.getElementById('student-form').reset();
-        }
-        
-        async function addStudent(event) {
-            event.preventDefault();
-            const form = document.getElementById('student-form');
-            const data = {
-                tipo_id: document.getElementById('tipo-id').value,
-                id_estudiante: document.getElementById('id-estudiante').value,
-                primer_nombre: document.getElementById('primer-nombre').value,
-                primer_apellido: document.getElementById('primer-apellido').value,
-                grupo: document.getElementById('grupo').value,
-                anio: new Date().getFullYear() // Año actual
-            };
-        
-            try {
-                await axios.post(`${apiUrl}/insertar-estudiante`, data);
-                alert('Estudiante agregado exitosamente');
-                hideAddStudentForm();
-                loadStudents(document.getElementById('admin-content'));
-            } catch (error) {
-                alert('Error al agregar el estudiante.');
-            }
-        }
-        
-        async function deleteStudent(idEstudiante) {
-            if (confirm(`¿Estás seguro de eliminar al estudiante con ID ${idEstudiante}?`)) {
-                try {
-                    await axios.delete(`${apiUrl}/eliminar-estudiante`, {
-                        data: { id_estudiante: idEstudiante }
-                    });
-                    alert('Estudiante eliminado exitosamente');
-                    loadStudents(document.getElementById('admin-content'));
-                } catch (error) {
-                    alert('Error al eliminar al estudiante.');
-                }
-            }
-        }
-        
-        async function editStudent(idEstudiante) {
-            try {
-                const response = await axios.get(`${apiUrl}/reporte-estudiantes-aula`, {
-                    params: { grupo: 1 } // Reemplazar con el grupo seleccionado
-                });
-                const estudiante = response.data.reporte.find(est => est.id_estudiante === idEstudiante);
-                showAddStudentForm();
-                document.getElementById('tipo-id').value = estudiante.tipo_id;
-                document.getElementById('id-estudiante').value = estudiante.id_estudiante;
-                document.getElementById('primer-nombre').value = estudiante.nombre_completo.split(' ')[0];
-                document.getElementById('primer-apellido').value = estudiante.nombre_completo.split(' ')[1];
-                document.getElementById('grupo').value = estudiante.grupo;
-                document.getElementById('student-id').value = idEstudiante;
-            } catch (error) {
-                alert('Error al cargar datos del estudiante.');
-            }
-        }
-        
-
-        async function loadClasses(content) {
-            content.innerHTML = '<h3>Cargando aulas...</h3>';
-            try {
-                const response = await axios.get(`${apiUrl}/generar_reporte_aulas`);
-                const aulas = response.data.reporte;
-        
-                let table = '<table class="table">';
-                table += '<thead><tr><th>Grupo</th><th>Grado</th><th>Jornada</th><th>Tutor</th><th>Acciones</th></tr></thead><tbody>';
-                aulas.forEach(aula => {
-                    table += `
-                        <tr>
-                            <td>${aula.grupo}</td>
-                            <td>${aula.grado_t} (${aula.grado_num})</td>
-                            <td>${aula.jornada}</td>
-                            <td>${aula.tutor}</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning" onclick="editAula(${aula.grupo})">Editar</button>
-                                <button class="btn btn-sm btn-danger" onclick="deleteAula(${aula.grupo})">Eliminar</button>
-                            </td>
-                        </tr>`;
-                });
-                table += '</tbody></table>';
-                content.innerHTML = table;
-            } catch (error) {
-                content.innerHTML = '<p>Error al cargar las aulas.</p>';
-            }
-        }
-        
-        function showAddAulaForm() {
-            document.getElementById('aulas-form').classList.remove('hidden');
-            document.getElementById('aulas-list').classList.add('hidden');
-        }
-        
-        function hideAddAulaForm() {
-            document.getElementById('aulas-form').classList.add('hidden');
-            document.getElementById('aulas-list').classList.remove('hidden');
-            document.getElementById('aula-form').reset();
-        }
-        
-        async function addAula(event) {
-            event.preventDefault();
-            const form = document.getElementById('aula-form');
-            const data = {
-                grado_t: document.getElementById('grado-t').value,
-                grado_num: document.getElementById('grado-num').value,
-                grupo_equivalente: document.getElementById('grupo-equiv').value,
-                jornada: document.getElementById('jornada').value,
-                codigo_insti: 1, // Reemplazar con datos reales
-                id_usuario: 1    // Reemplazar con datos reales
-            };
-        
-            try {
-                await axios.post(`${apiUrl}/aulas/agregar`, data);
-                alert('Aula agregada exitosamente');
-                hideAddAulaForm();
-                loadClasses(document.getElementById('admin-content'));
-            } catch (error) {
-                alert('Error al agregar el aula.');
-            }
-        }
-        
-        async function deleteAula(grupo) {
-            if (confirm(`¿Estás seguro de eliminar el aula con grupo ${grupo}?`)) {
-                try {
-                    await axios.delete(`${apiUrl}/aulas/eliminar/${grupo}`);
-                    alert('Aula eliminada exitosamente');
-                    loadClasses(document.getElementById('admin-content'));
-                } catch (error) {
-                    alert('Error al eliminar el aula.');
-                }
-            }
-        }
-        
-        async function editAula(grupo) {
-            try {
-                const response = await axios.get(`${apiUrl}/aulas/${grupo}`);
-                const aula = response.data;
-                showAddAulaForm();
-                document.getElementById('grado-t').value = aula.grado_t;
-                document.getElementById('grado-num').value = aula.grado_num;
-                document.getElementById('grupo-equiv').value = aula.grupo_equivalente;
-                document.getElementById('jornada').value = aula.jornada;
-                document.getElementById('aula-grupo').value = grupo;
-            } catch (error) {
-                alert('Error al cargar el aula para edición.');
-            }
-        }
-        
-
-        
-
-        // Inicio de sesión
-        document.getElementById('login-form').addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const identificacion = document.getElementById('identificacion').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                const response = await axios.post(`${apiUrl}/obtener-rol`, { identificacion, password });
-                const roles = response.data.roles;
-
-                if (roles.includes('Administrador')) {
-                    document.getElementById('login-section').classList.add('hidden');
-                    document.getElementById('admin-panel').classList.remove('hidden');
-                } else if (roles.includes('Tutor')) {
-                    document.getElementById('login-section').classList.add('hidden');
-                    document.getElementById('tutor-panel').classList.remove('hidden');
-                } else {
-                    alert('Rol no reconocido.');
-                }
-            } catch (error) {
-                alert('Error de autenticación: ' + error.response?.data?.error || error.message);
-            }
-        });
-
-        // Cargar secciones dinámicas
-        async function loadAdminSection(section) {
-            const content = document.getElementById('admin-content');
-            content.innerHTML = `<h3>Cargando ${section}...</h3>`;
-
-            if (section === 'users') await loadUsers(content);
-            if (section === 'institutions') await loadInstitutions(content);
-            if (section === 'classes') await loadClasses(content);
-            if (section === 'students') await loadStudents(content);
-            if (section === 'schedules') await loadSchedules(content);
-            if (section === 'grades') await loadGrades(content);
-            if (section === 'reports') await loadReports(content);
-        }
-
-        async function loadTutorSection(section) {
-            const content = document.getElementById('tutor-content');
-            content.innerHTML = `<h3>Cargando ${section}...</h3>`;
-        }
-
-        // CRUD de Usuarios
-        async function loadUsers(content) {
-            try {
-                const response = await axios.get(`${apiUrl}/reporte-usuarios`);
-                const users = response.data.reporte;
-
-                let table = '<h3>Gestión de Usuarios</h3><table class="table">';
-                table += '<thead><tr><th>Nombre Completo</th><th>Rol</th><th>Correo</th><th>Teléfono</th></tr></thead><tbody>';
-                users.forEach(user => {
-                    table += `<tr><td>${user.nombre_completo}</td><td>${user.rol}</td><td>${user.correo}</td><td>${user.telefono}</td></tr>`;
-                });
-                table += '</tbody></table>';
-                content.innerHTML = table;
-            } catch (error) {
-                content.innerHTML = '<p>Error al cargar usuarios.</p>';
-            }
-        }
-
-        // CRUD de Instituciones
-        async function loadInstitutions(content) {
-            try {
-                const response = await axios.get(`${apiUrl}/reporte-instituciones`);
-                const institutions = response.data.reporte;
-
-                let table = '<h3>Gestión de Instituciones</h3><table class="table">';
-                table += '<thead><tr><th>Nombre</th><th>Rector</th><th>Dirección</th><th>Barrio</th></tr></thead><tbody>';
-                institutions.forEach(inst => {
-                    table += `<tr><td>${inst.nombre}</td><td>${inst.rector}</td><td>${inst.direccion}</td><td>${inst.barrio}</td></tr>`;
-                });
-                table += '</tbody></table>';
-                content.innerHTML = table;
-            } catch (error) {
-                content.innerHTML = '<p>Error al cargar instituciones.</p>';
-            }
-        }
-
-        // Función para cerrar sesión
-        function logout() {
-            document.getElementById('login-section').classList.remove('hidden');
-            document.getElementById('admin-panel').classList.add('hidden');
-            document.getElementById('tutor-panel').classList.add('hidden');
         }
     </script>
 </body>
 </html>
+
