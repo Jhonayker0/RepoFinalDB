@@ -466,6 +466,117 @@
         </div>
     </div>
 
+    <!-- Modales de Edición -->
+    <!-- Modal para Editar Usuario -->
+    <div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form id="editar-usuario-form">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Editar Usuario</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="editar_id_usuario">
+              <div class="mb-3">
+                <label for="editar_rol" class="form-label">Rol</label>
+                <select class="form-select" id="editar_rol" required>
+                  <option value="">Seleccione</option>
+                  <option value="Administrador">Administrador</option>
+                  <option value="Tutor">Tutor</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="editar_pwd" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="editar_pwd" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_tipo_id" class="form-label">Tipo de ID</label>
+                <input type="text" class="form-control" id="editar_tipo_id" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_identificacion_usuario" class="form-label">Identificación</label>
+                <input type="text" class="form-control" id="editar_identificacion_usuario" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_primer_nombre_usuario" class="form-label">Primer Nombre</label>
+                <input type="text" class="form-control" id="editar_primer_nombre_usuario" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_segundo_nombre_usuario" class="form-label">Segundo Nombre</label>
+                <input type="text" class="form-control" id="editar_segundo_nombre_usuario">
+              </div>
+              <div class="mb-3">
+                <label for="editar_primer_apellido_usuario" class="form-label">Primer Apellido</label>
+                <input type="text" class="form-control" id="editar_primer_apellido_usuario" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_segundo_apellido_usuario" class="form-label">Segundo Apellido</label>
+                <input type="text" class="form-control" id="editar_segundo_apellido_usuario">
+              </div>
+              <div class="mb-3">
+                <label for="editar_correo_usuario" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="editar_correo_usuario" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_telefono_usuario" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="editar_telefono_usuario" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal para Editar Aula -->
+    <div class="modal fade" id="editarAulaModal" tabindex="-1" aria-labelledby="editarAulaModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <form id="editar-aula-form">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Editar Aula</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="editar_grupo_aula">
+              <div class="mb-3">
+                <label for="editar_grado_t" class="form-label">Tipo de Grado</label>
+                <input type="text" class="form-control" id="editar_grado_t" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_grado_num" class="form-label">Número de Grado</label>
+                <input type="number" class="form-control" id="editar_grado_num" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_grupo_equivalente" class="form-label">Grupo Equivalente</label>
+                <input type="text" class="form-control" id="editar_grupo_equivalente" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_jornada" class="form-label">Jornada</label>
+                <input type="text" class="form-control" id="editar_jornada" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_codigo_insti" class="form-label">Código de Institución</label>
+                <input type="text" class="form-control" id="editar_codigo_insti" required>
+              </div>
+              <div class="mb-3">
+                <label for="editar_id_usuario_tutor" class="form-label">ID Usuario Tutor</label>
+                <input type="text" class="form-control" id="editar_id_usuario_tutor" required>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <!-- Bootstrap JS y dependencias (Popper.js) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- JavaScript para manejar la lógica de la aplicación -->
@@ -602,7 +713,8 @@
                             <td>${usuario.correo}</td>
                             <td>${usuario.telefono}</td>
                             <td>
-                                <!-- Aquí puedes agregar botones para editar o eliminar -->
+                                <button class="btn btn-sm btn-primary editar-usuario-btn" data-id="${usuario.id_usuario}">Editar</button>
+                                <button class="btn btn-sm btn-danger eliminar-usuario-btn" data-id="${usuario.id_usuario}">Eliminar</button>
                             </td>
                         `;
                         usuariosTableBody.appendChild(row);
@@ -676,7 +788,8 @@
                             <td>${aula.institucion}</td>
                             <td>${aula.tutor}</td>
                             <td>
-                                <!-- Aquí puedes agregar botones para editar o eliminar -->
+                                <button class="btn btn-sm btn-primary editar-aula-btn" data-id="${aula.grupo}">Editar</button>
+                                <button class="btn btn-sm btn-danger eliminar-aula-btn" data-id="${aula.grupo}">Eliminar</button>
                             </td>
                         `;
                         aulasTableBody.appendChild(row);
@@ -736,15 +849,41 @@
 
         async function cargarEstudiantes() {
             try {
-                const response = await fetch('http://localhost:5000/reportes/estudiantes_aula?grupo=', {
+                const grupoSeleccionado = prompt('Ingrese el grupo para ver los estudiantes:');
+                if (!grupoSeleccionado) {
+                    estudiantesTableBody.innerHTML = `<tr><td colspan="8">No se ingresó ningún grupo.</td></tr>`;
+                    return;
+                }
+
+                const response = await fetch(`http://localhost:5000/reportes/estudiantes_aula?grupo=${grupoSeleccionado}`, {
                     method: 'GET',
                     headers: getAuthHeaders()
                 });
 
-                // Implementa una manera de seleccionar el grupo para mostrar los estudiantes
+                const data = await response.json();
 
-                // Por simplicidad, omitimos la carga automática
-                estudiantesTableBody.innerHTML = `<tr><td colspan="8">Seleccione un grupo para ver los estudiantes.</td></tr>`;
+                if (response.ok) {
+                    estudiantesTableBody.innerHTML = '';
+                    data.reporte.forEach(estudiante => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${estudiante.id_estudiante}</td>
+                            <td>${estudiante.nombre_completo}</td>
+                            <td>${estudiante.genero}</td>
+                            <td>${estudiante.fecha_nacimiento}</td>
+                            <td>${estudiante.estrato}</td>
+                            <td>${estudiante.anio}</td>
+                            <td>${estudiante.grupo}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary editar-estudiante-btn" data-id="${estudiante.id_estudiante}">Editar</button>
+                                <button class="btn btn-sm btn-danger eliminar-estudiante-btn" data-id="${estudiante.id_estudiante}">Eliminar</button>
+                            </td>
+                        `;
+                        estudiantesTableBody.appendChild(row);
+                    });
+                } else {
+                    estudiantesTableBody.innerHTML = `<tr><td colspan="8">${data.message}</td></tr>`;
+                }
             } catch (error) {
                 estudiantesTableBody.innerHTML = `<tr><td colspan="8">Error de conexión</td></tr>`;
             }
@@ -795,10 +934,30 @@
                     headers: getAuthHeaders()
                 });
 
-                // Implementa una ruta para obtener horarios si no existe
+                const data = await response.json();
 
-                // Por simplicidad, omitimos la carga automática
-                horariosTableBody.innerHTML = `<tr><td colspan="8">Funcionalidad pendiente.</td></tr>`;
+                if (response.ok) {
+                    horariosTableBody.innerHTML = '';
+                    data.reporte.forEach(horario => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${horario.codigo_h}</td>
+                            <td>${horario.fecha_inicio}</td>
+                            <td>${horario.fecha_fin}</td>
+                            <td>${horario.hora_inicio}</td>
+                            <td>${horario.hora_fin}</td>
+                            <td>${horario.dia_inicial}</td>
+                            <td>${horario.dia_texto}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary editar-horario-btn" data-id="${horario.codigo_h}">Editar</button>
+                                <button class="btn btn-sm btn-danger eliminar-horario-btn" data-id="${horario.codigo_h}">Eliminar</button>
+                            </td>
+                        `;
+                        horariosTableBody.appendChild(row);
+                    });
+                } else {
+                    horariosTableBody.innerHTML = `<tr><td colspan="8">${data.message}</td></tr>`;
+                }
             } catch (error) {
                 horariosTableBody.innerHTML = `<tr><td colspan="8">Error de conexión</td></tr>`;
             }
@@ -867,7 +1026,8 @@
                             <td>${insti.direccion}</td>
                             <td>${insti.anio}</td>
                             <td>
-                                <!-- Aquí puedes agregar botones para editar o eliminar -->
+                                <button class="btn btn-sm btn-primary editar-institucion-btn" data-id="${insti.codigo}">Editar</button>
+                                <button class="btn btn-sm btn-danger eliminar-institucion-btn" data-id="${insti.codigo}">Eliminar</button>
                             </td>
                         `;
                         institucionesTableBody.appendChild(row);
@@ -1060,11 +1220,304 @@
             }
         });
 
-        // ==================== Funciones Generales ====================
+        // ==================== Funcionalidades de Editar y Eliminar ====================
 
-        // Puedes agregar aquí más funciones para manejar otras secciones como reportes de horarios, etc.
+        // ==================== Usuarios ====================
+
+        // Función para abrir el modal de edición y cargar los datos del usuario
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('editar-usuario-btn')) {
+                const id_usuario = e.target.getAttribute('data-id');
+                abrirModalEditarUsuario(id_usuario);
+            }
+        });
+
+        async function abrirModalEditarUsuario(id_usuario) {
+            try {
+                // Obtener los datos del usuario específico
+                const response = await fetch('http://localhost:5000/reportes/usuarios', {
+                    method: 'GET',
+                    headers: getAuthHeaders()
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    const usuario = data.reporte.find(u => u.id_usuario == id_usuario);
+                    if (usuario) {
+                        // Rellenar los campos del modal con los datos del usuario
+                        document.getElementById('editar_id_usuario').value = usuario.id_usuario;
+                        document.getElementById('editar_rol').value = usuario.rol;
+                        // Nota: No es recomendable mostrar la contraseña. Puedes optar por dejarla en blanco
+                        document.getElementById('editar_pwd').value = '';
+                        // Obtener tipo_id y otros campos mediante una solicitud adicional si no están incluidos en el reporte
+                        // Supongamos que el reporte incluye todos los campos necesarios
+                        // Para este ejemplo, necesitaríamos modificar el backend para incluir todos los campos
+                        // o realizar una solicitud GET específica para obtener los detalles completos del usuario
+                        // Por simplicidad, aquí dejaremos algunos campos en blanco
+                        // Idealmente, deberías adaptar esto según cómo estructures tu backend
+
+                        // Ejemplo:
+                        // document.getElementById('editar_tipo_id').value = usuario.tipo_id;
+                        // document.getElementById('editar_identificacion_usuario').value = usuario.identificacion;
+                        // ... y así sucesivamente
+
+                        // Abrir el modal
+                        const editarUsuarioModal = new bootstrap.Modal(document.getElementById('editarUsuarioModal'));
+                        editarUsuarioModal.show();
+                    } else {
+                        alert('Usuario no encontrado.');
+                    }
+                } else {
+                    alert(data.message || 'Error al obtener los datos del usuario.');
+                }
+            } catch (error) {
+                alert('Error de conexión');
+            }
+        }
+
+        // Manejar la actualización de usuario
+        const editarUsuarioForm = document.getElementById('editar-usuario-form');
+
+        editarUsuarioForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const id_usuario = document.getElementById('editar_id_usuario').value;
+            const rol = document.getElementById('editar_rol').value;
+            const pwd = document.getElementById('editar_pwd').value;
+            const tipo_id = document.getElementById('editar_tipo_id').value;
+            const identificacion = document.getElementById('editar_identificacion_usuario').value;
+            const primer_nombre = document.getElementById('editar_primer_nombre_usuario').value;
+            const segundo_nombre = document.getElementById('editar_segundo_nombre_usuario').value;
+            const primer_apellido = document.getElementById('editar_primer_apellido_usuario').value;
+            const segundo_apellido = document.getElementById('editar_segundo_apellido_usuario').value;
+            const correo = document.getElementById('editar_correo_usuario').value;
+            const telefono = document.getElementById('editar_telefono_usuario').value;
+
+            try {
+                const response = await fetch(`http://localhost:5000/usuarios/${identificacion}`, {
+                    method: 'PUT',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({
+                        nuevo_rol: rol,
+                        nueva_pwd: pwd,
+                        nuevo_tipo_id: tipo_id,
+                        nueva_identificacion: identificacion,
+                        nuevo_primer_nombre: primer_nombre,
+                        nuevo_segundo_nombre: segundo_nombre,
+                        nuevo_primer_apellido: primer_apellido,
+                        nuevo_segundo_apellido: segundo_apellido,
+                        nuevo_correo: correo,
+                        nuevo_telefono: telefono
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    editarUsuarioForm.reset();
+                    // Cerrar el modal
+                    const editarUsuarioModalEl = document.getElementById('editarUsuarioModal');
+                    const editarUsuarioModal = bootstrap.Modal.getInstance(editarUsuarioModalEl);
+                    editarUsuarioModal.hide();
+                    cargarUsuarios();
+                } else {
+                    alert(data.error || data.message);
+                }
+            } catch (error) {
+                alert('Error de conexión');
+            }
+        });
+
+        // Función para manejar la eliminación de usuario
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('eliminar-usuario-btn')) {
+                const id_usuario = e.target.getAttribute('data-id');
+                eliminarUsuario(id_usuario);
+            }
+        });
+
+        async function eliminarUsuario(id_usuario) {
+            if (!confirm('¿Está seguro de que desea eliminar este usuario? Esta acción no se puede deshacer.')) {
+                return;
+            }
+
+            try {
+                // Obtener la identificación del usuario para construir la URL
+                const responseUsuarios = await fetch('http://localhost:5000/reportes/usuarios', {
+                    method: 'GET',
+                    headers: getAuthHeaders()
+                });
+
+                const dataUsuarios = await responseUsuarios.json();
+
+                if (responseUsuarios.ok) {
+                    const usuario = dataUsuarios.reporte.find(u => u.id_usuario == id_usuario);
+                    if (usuario) {
+                        const identificacion = usuario.identificacion || ''; // Asegúrate de que el backend incluya este campo
+
+                        if (!identificacion) {
+                            alert('No se pudo obtener la identificación del usuario.');
+                            return;
+                        }
+
+                        const response = await fetch(`http://localhost:5000/usuarios/${identificacion}`, {
+                            method: 'DELETE',
+                            headers: getAuthHeaders()
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok) {
+                            alert(data.message);
+                            cargarUsuarios();
+                        } else {
+                            alert(data.error || data.message);
+                        }
+                    } else {
+                        alert('Usuario no encontrado.');
+                    }
+                } else {
+                    alert(dataUsuarios.message || 'Error al obtener los datos del usuario.');
+                }
+            } catch (error) {
+                alert('Error de conexión');
+            }
+        }
+
+        // ==================== Aulas ====================
+
+        // Función para abrir el modal de edición y cargar los datos del aula
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('editar-aula-btn')) {
+                const grupo = e.target.getAttribute('data-id');
+                abrirModalEditarAula(grupo);
+            }
+        });
+
+        async function abrirModalEditarAula(grupo) {
+            try {
+                const response = await fetch('http://localhost:5000/reportes/aulas', {
+                    method: 'GET',
+                    headers: getAuthHeaders()
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    const aula = data.reporte.find(a => a.grupo == grupo);
+                    if (aula) {
+                        // Rellenar los campos del modal con los datos del aula
+                        document.getElementById('editar_grupo_aula').value = aula.grupo;
+                        document.getElementById('editar_grado_t').value = aula.grado_t;
+                        document.getElementById('editar_grado_num').value = aula.grado_num;
+                        document.getElementById('editar_grupo_equivalente').value = aula.grupo_equivalente;
+                        document.getElementById('editar_jornada').value = aula.jornada;
+                        document.getElementById('editar_codigo_insti').value = aula.codigo_insti;
+                        // Obtener el IDUsuario del tutor puede requerir una solicitud adicional
+                        // Por simplicidad, asumiremos que está incluido en el reporte
+                        // document.getElementById('editar_id_usuario_tutor').value = aula.id_usuario;
+                        // Si no está incluido, adapta según tu estructura
+
+                        // Abrir el modal
+                        const editarAulaModal = new bootstrap.Modal(document.getElementById('editarAulaModal'));
+                        editarAulaModal.show();
+                    } else {
+                        alert('Aula no encontrada.');
+                    }
+                } else {
+                    alert(data.message || 'Error al obtener los datos del aula.');
+                }
+            } catch (error) {
+                alert('Error de conexión');
+            }
+        }
+
+        // Manejar la actualización de aula
+        const editarAulaForm = document.getElementById('editar-aula-form');
+
+        editarAulaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const grupo = document.getElementById('editar_grupo_aula').value;
+            const grado_t = document.getElementById('editar_grado_t').value;
+            const grado_num = document.getElementById('editar_grado_num').value;
+            const grupo_equivalente = document.getElementById('editar_grupo_equivalente').value;
+            const jornada = document.getElementById('editar_jornada').value;
+            const codigo_insti = document.getElementById('editar_codigo_insti').value;
+            const id_usuario = document.getElementById('editar_id_usuario_tutor').value;
+
+            try {
+                const response = await fetch(`http://localhost:5000/aulas/${grupo}`, {
+                    method: 'PUT',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({
+                        grado_t, grado_num, grupo_equivalente, jornada, codigo_insti, id_usuario
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    editarAulaForm.reset();
+                    // Cerrar el modal
+                    const editarAulaModalEl = document.getElementById('editarAulaModal');
+                    const editarAulaModal = bootstrap.Modal.getInstance(editarAulaModalEl);
+                    editarAulaModal.hide();
+                    cargarAulas();
+                } else {
+                    alert(data.error || data.message);
+                }
+            } catch (error) {
+                alert('Error de conexión');
+            }
+        });
+
+        // Función para manejar la eliminación de aula
+        document.addEventListener('click', function(e) {
+            if (e.target && e.target.classList.contains('eliminar-aula-btn')) {
+                const grupo = e.target.getAttribute('data-id');
+                eliminarAula(grupo);
+            }
+        });
+
+        async function eliminarAula(grupo) {
+            if (!confirm('¿Está seguro de que desea eliminar esta aula? Esta acción no se puede deshacer.')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:5000/aulas/${grupo}`, {
+                    method: 'DELETE',
+                    headers: getAuthHeaders()
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    cargarAulas();
+                } else {
+                    alert(data.error || data.message);
+                }
+            } catch (error) {
+                alert('Error de conexión');
+            }
+        }
+
+        // ==================== Estudiantes ====================
+
+        // Similar a Usuarios y Aulas, implementa funciones para Editar y Eliminar Estudiantes
+        // Asegúrate de crear un modal similar al de Usuarios y Aulas para la edición de estudiantes
+
+        // ==================== Horarios e Instituciones ====================
+
+        // Aplica el mismo patrón para Horarios e Instituciones
 
     </script>
 </body>
 </html>
+
 
