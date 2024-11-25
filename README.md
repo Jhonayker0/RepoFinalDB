@@ -58,17 +58,12 @@ git clone https://github.com/Jhonayker0/RepoFinalDB.git
 
 ### **2. Configurar el Backend**
 
-1. **Crear un entorno virtual:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # En Windows: venv\Scripts\activate
-   ```
 
-2. **Configurar la base de datos:**
+1. **Configurar la base de datos:**
    - Asegúrate de tener configurada la base de datos mencionada en `app.py`.
    - Si estás usando SQLite, el archivo de la base de datos debería generarse automáticamente al ejecutar el backend.
 
-3. **Ejecutar el servidor:**
+2. **Ejecutar el servidor:**
    ```bash
    python app.py
    ```
