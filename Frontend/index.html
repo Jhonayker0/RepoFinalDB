@@ -1,20 +1,20 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>FLAKE - Sistema de Gestión Escolar</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAKE - Gestión Académica</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         .hidden { display: none; }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <!-- Login Section -->
+    <div class="container mt-4">
+        <!-- Sección de Inicio de Sesión -->
         <div id="login-section">
-            <h2>Iniciar Sesión</h2>
+            <h2>Inicio de Sesión</h2>
             <form id="login-form">
                 <div class="mb-3">
                     <label for="identificacion" class="form-label">Identificación</label>
@@ -24,1500 +24,916 @@
                     <label for="password" class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Ingresar</button>
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
             </form>
-            <div id="login-error" class="text-danger mt-3"></div>
         </div>
-
-        <!-- Main Application Section -->
-        <div id="app-section" class="hidden">
-            <h2>Bienvenido al Sistema FLAKE</h2>
-            <button id="logout-btn" class="btn btn-secondary mb-3">Cerrar Sesión</button>
-
-            <!-- Nav Tabs -->
-            <ul class="nav nav-tabs" id="appTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="usuarios-tab" data-bs-toggle="tab" data-bs-target="#usuarios" type="button" role="tab">Usuarios</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="aulas-tab" data-bs-toggle="tab" data-bs-target="#aulas" type="button" role="tab">Aulas</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="estudiantes-tab" data-bs-toggle="tab" data-bs-target="#estudiantes" type="button" role="tab">Estudiantes</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="horarios-tab" data-bs-toggle="tab" data-bs-target="#horarios" type="button" role="tab">Horarios</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="instituciones-tab" data-bs-toggle="tab" data-bs-target="#instituciones" type="button" role="tab">Instituciones</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="reportes-tab" data-bs-toggle="tab" data-bs-target="#reportes" type="button" role="tab">Reportes</button>
-                </li>
-            </ul>
-
-            <div class="tab-content" id="appTabsContent">
-                <!-- Usuarios Tab -->
-                <div class="tab-pane fade show active" id="usuarios" role="tabpanel">
-                    <h3 class="mt-3">Gestión de Usuarios</h3>
-                    <!-- Agregar Usuario -->
-                    <form id="agregar-usuario-form" class="mb-4">
-                        <h5>Agregar Usuario</h5>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="rol" class="form-label">Rol</label>
-                                <select class="form-select" id="rol" required>
-                                    <option value="">Seleccione</option>
-                                    <option value="Administrador">Administrador</option>
-                                    <option value="Tutor">Tutor</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="pwd" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="pwd" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="tipo_id" class="form-label">Tipo de ID</label>
-                                <input type="text" class="form-control" id="tipo_id" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="identificacion_usuario" class="form-label">Identificación</label>
-                                <input type="text" class="form-control" id="identificacion_usuario" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="primer_nombre_usuario" class="form-label">Primer Nombre</label>
-                                <input type="text" class="form-control" id="primer_nombre_usuario" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="segundo_nombre_usuario" class="form-label">Segundo Nombre</label>
-                                <input type="text" class="form-control" id="segundo_nombre_usuario">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="primer_apellido_usuario" class="form-label">Primer Apellido</label>
-                                <input type="text" class="form-control" id="primer_apellido_usuario" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="segundo_apellido_usuario" class="form-label">Segundo Apellido</label>
-                                <input type="text" class="form-control" id="segundo_apellido_usuario">
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="correo_usuario" class="form-label">Correo Electrónico</label>
-                                <input type="email" class="form-control" id="correo_usuario" required>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefono_usuario" class="form-label">Teléfono</label>
-                            <input type="text" class="form-control" id="telefono_usuario" required>
-                        </div>
-                        <button type="submit" class="btn btn-success">Agregar Usuario</button>
-                    </form>
-
-                    <!-- Tabla de Usuarios -->
-                    <h5>Lista de Usuarios</h5>
-                    <table class="table table-bordered" id="usuarios-table">
-                        <thead>
-                            <tr>
-                                <th>ID Usuario</th>
-                                <th>Nombre Completo</th>
-                                <th>Rol</th>
-                                <th>Correo</th>
-                                <th>Teléfono</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Datos dinámicos -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Aulas Tab -->
-                <div class="tab-pane fade" id="aulas" role="tabpanel">
-                    <h3 class="mt-3">Gestión de Aulas</h3>
-                    <!-- Agregar Aula -->
-                    <form id="agregar-aula-form" class="mb-4">
-                        <h5>Agregar Aula</h5>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="grado_t" class="form-label">Tipo de Grado</label>
-                                <input type="text" class="form-control" id="grado_t" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="grado_num" class="form-label">Número de Grado</label>
-                                <input type="number" class="form-control" id="grado_num" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="grupo_equivalente" class="form-label">Grupo Equivalente</label>
-                                <input type="text" class="form-control" id="grupo_equivalente" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="jornada" class="form-label">Jornada</label>
-                                <input type="text" class="form-control" id="jornada" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="codigo_insti" class="form-label">Código de Institución</label>
-                                <input type="text" class="form-control" id="codigo_insti" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="id_usuario_tutor" class="form-label">ID Usuario Tutor</label>
-                                <input type="text" class="form-control" id="id_usuario_tutor" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-success">Agregar Aula</button>
-                    </form>
-
-                    <!-- Tabla de Aulas -->
-                    <h5>Lista de Aulas</h5>
-                    <table class="table table-bordered" id="aulas-table">
-                        <thead>
-                            <tr>
-                                <th>Grupo</th>
-                                <th>Grado T</th>
-                                <th>Grado Num</th>
-                                <th>Grupo Equivalente</th>
-                                <th>Jornada</th>
-                                <th>Año</th>
-                                <th>Institución</th>
-                                <th>Tutor</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Datos dinámicos -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Estudiantes Tab -->
-                <div class="tab-pane fade" id="estudiantes" role="tabpanel">
-                    <h3 class="mt-3">Gestión de Estudiantes</h3>
-                    <!-- Agregar Estudiante -->
-                    <form id="agregar-estudiante-form" class="mb-4">
-                        <h5>Agregar Estudiante</h5>
-                        <div class="row">
-                            <div class="col-md-2 mb-3">
-                                <label for="tipo_id_estudiante" class="form-label">Tipo de ID</label>
-                                <input type="text" class="form-control" id="tipo_id_estudiante" required>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="id_estudiante" class="form-label">ID Estudiante</label>
-                                <input type="text" class="form-control" id="id_estudiante" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="primer_nombre_estudiante" class="form-label">Primer Nombre</label>
-                                <input type="text" class="form-control" id="primer_nombre_estudiante" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="segundo_nombre_estudiante" class="form-label">Segundo Nombre</label>
-                                <input type="text" class="form-control" id="segundo_nombre_estudiante">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="primer_apellido_estudiante" class="form-label">Primer Apellido</label>
-                                <input type="text" class="form-control" id="primer_apellido_estudiante" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="segundo_apellido_estudiante" class="form-label">Segundo Apellido</label>
-                                <input type="text" class="form-control" id="segundo_apellido_estudiante">
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="genero_estudiante" class="form-label">Género</label>
-                                <select class="form-select" id="genero_estudiante" required>
-                                    <option value="">Seleccione</option>
-                                    <option value="M">Masculino</option>
-                                    <option value="F">Femenino</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="fecha_nacimiento_estudiante" class="form-label">Fecha Nacimiento</label>
-                                <input type="date" class="form-control" id="fecha_nacimiento_estudiante" required>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="estrato_estudiante" class="form-label">Estrato</label>
-                                <input type="number" class="form-control" id="estrato_estudiante" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-2 mb-3">
-                                <label for="anio_estudiante" class="form-label">Año</label>
-                                <input type="number" class="form-control" id="anio_estudiante" required>
-                            </div>
-                            <div class="col-md-2 mb-3">
-                                <label for="grupo_estudiante" class="form-label">Grupo</label>
-                                <input type="text" class="form-control" id="grupo_estudiante" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-success">Agregar Estudiante</button>
-                    </form>
-
-                    <!-- Tabla de Estudiantes -->
-                    <h5>Lista de Estudiantes</h5>
-                    <table class="table table-bordered" id="estudiantes-table">
-                        <thead>
-                            <tr>
-                                <th>ID Estudiante</th>
-                                <th>Nombre Completo</th>
-                                <th>Género</th>
-                                <th>Fecha Nacimiento</th>
-                                <th>Estrato</th>
-                                <th>Año</th>
-                                <th>Grupo</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Datos dinámicos -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Horarios Tab -->
-                <div class="tab-pane fade" id="horarios" role="tabpanel">
-                    <h3 class="mt-3">Gestión de Horarios</h3>
-                    <!-- Agregar Horario -->
-                    <form id="agregar-horario-form" class="mb-4">
-                        <h5>Agregar Horario</h5>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="fecha_inicio" class="form-label">Fecha Inicio</label>
-                                <input type="date" class="form-control" id="fecha_inicio" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="fecha_fin" class="form-label">Fecha Fin</label>
-                                <input type="date" class="form-control" id="fecha_fin" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="hora_inicio" class="form-label">Hora Inicio</label>
-                                <input type="time" class="form-control" id="hora_inicio" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="hora_fin" class="form-label">Hora Fin</label>
-                                <input type="time" class="form-control" id="hora_fin" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="dia_inicial" class="form-label">Inicial del Día</label>
-                                <input type="text" class="form-control" id="dia_inicial" maxlength="1" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="dia_texto" class="form-label">Nombre del Día</label>
-                                <input type="text" class="form-control" id="dia_texto" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-success">Agregar Horario</button>
-                    </form>
-
-                    <!-- Tabla de Horarios -->
-                    <h5>Lista de Horarios</h5>
-                    <table class="table table-bordered" id="horarios-table">
-                        <thead>
-                            <tr>
-                                <th>CodigoH</th>
-                                <th>Fecha Inicio</th>
-                                <th>Fecha Fin</th>
-                                <th>Hora Inicio</th>
-                                <th>Hora Fin</th>
-                                <th>Día Inicial</th>
-                                <th>Día Texto</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Datos dinámicos -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Instituciones Tab -->
-                <div class="tab-pane fade" id="instituciones" role="tabpanel">
-                    <h3 class="mt-3">Gestión de Instituciones</h3>
-                    <!-- Agregar Institución -->
-                    <form id="agregar-institucion-form" class="mb-4">
-                        <h5>Agregar Institución</h5>
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="codigo_insti_insti" class="form-label">Código Institución</label>
-                                <input type="text" class="form-control" id="codigo_insti_insti" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="nombre_insti" class="form-label">Nombre Institución</label>
-                                <input type="text" class="form-control" id="nombre_insti" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
-                                <label for="nombre_rector" class="form-label">Nombre Rector</label>
-                                <input type="text" class="form-control" id="nombre_rector" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3 mb-3">
-                                <label for="localidad" class="form-label">Localidad</label>
-                                <input type="text" class="form-control" id="localidad" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="barrio" class="form-label">Barrio</label>
-                                <input type="text" class="form-control" id="barrio" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="numero_insti" class="form-label">Número</label>
-                                <input type="number" class="form-control" id="numero_insti" required>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="direccion_insti" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion_insti" required>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-success">Agregar Institución</button>
-                    </form>
-
-                    <!-- Tabla de Instituciones -->
-                    <h5>Lista de Instituciones</h5>
-                    <table class="table table-bordered" id="instituciones-table">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Nombre</th>
-                                <th>Rector</th>
-                                <th>Localidad</th>
-                                <th>Barrio</th>
-                                <th>Número</th>
-                                <th>Dirección</th>
-                                <th>Año</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Datos dinámicos -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Reportes Tab -->
-                <div class="tab-pane fade" id="reportes" role="tabpanel">
-                    <h3 class="mt-3">Generar Reportes</h3>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <h5>Reporte de Aulas</h5>
-                            <button class="btn btn-primary" id="generar-reporte-aulas">Generar</button>
-                            <pre id="reporte-aulas" class="mt-3"></pre>
-                        </li>
-                        <li class="list-group-item">
-                            <h5>Reporte de Aulas por Tutor</h5>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="id_usuario_reporte_aulas_tutor" class="form-label">ID Usuario Tutor</label>
-                                    <input type="text" class="form-control" id="id_usuario_reporte_aulas_tutor" required>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" id="generar-reporte-aulas-tutor">Generar</button>
-                            <pre id="reporte-aulas-tutor" class="mt-3"></pre>
-                        </li>
-                        <li class="list-group-item">
-                            <h5>Reporte de Estudiantes por Aula</h5>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="grupo_reporte_estudiantes" class="form-label">Grupo</label>
-                                    <input type="text" class="form-control" id="grupo_reporte_estudiantes" required>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" id="generar-reporte-estudiantes-aula">Generar</button>
-                            <pre id="reporte-estudiantes-aula" class="mt-3"></pre>
-                        </li>
-                        <li class="list-group-item">
-                            <h5>Reporte de Instituciones</h5>
-                            <button class="btn btn-primary" id="generar-reporte-instituciones">Generar</button>
-                            <pre id="reporte-instituciones" class="mt-3"></pre>
-                        </li>
-                        <li class="list-group-item">
-                            <h5>Reporte de Personas</h5>
-                            <button class="btn btn-primary" id="generar-reporte-personas">Generar</button>
-                            <pre id="reporte-personas" class="mt-3"></pre>
-                        </li>
-                        <li class="list-group-item">
-                            <h5>Reporte de Tutores</h5>
-                            <button class="btn btn-primary" id="generar-reporte-tutores">Generar</button>
-                            <pre id="reporte-tutores" class="mt-3"></pre>
-                        </li>
-                        <li class="list-group-item">
-                            <h5>Calificaciones por Aula</h5>
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label for="grupo_calificaciones" class="form-label">Grupo</label>
-                                    <input type="text" class="form-control" id="grupo_calificaciones" required>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <label for="anio_calificaciones" class="form-label">Año</label>
-                                    <input type="number" class="form-control" id="anio_calificaciones" required>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary" id="generar-reporte-calificaciones">Generar</button>
-                            <pre id="reporte-calificaciones" class="mt-3"></pre>
-                        </li>
-                    </ul>
-                </div>
+    
+        <!-- Panel de Administración -->
+        <div id="admin-panel" class="hidden">
+            <h2>Panel de Administración</h2>
+            <div>
+                <button class="btn btn-secondary" onclick="loadAdminSection('users')">Gestión de Usuarios</button>
+                <button class="btn btn-secondary" onclick="loadAdminSection('roles')">Gestión de Roles</button>
+                <button class="btn btn-secondary" onclick="loadAdminSection('institutions')">Gestión de Instituciones</button>
+                <button class="btn btn-secondary" onclick="loadAdminSection('classes')">Gestión de Aulas</button>
+                <button class="btn btn-secondary" onclick="loadAdminSection('students')">Gestión de Estudiantes</button>
+                <button class="btn btn-secondary" onclick="loadAdminSection('schedules')">Gestión de Horarios</button>
+                <button class="btn btn-secondary" onclick="loadAdminSection('grades')">Gestión de Calificaciones</button>
+                <button class="btn btn-secondary" onclick="loadAdminSection('attendance')">Gestión de Asistencias</button>
+                <button class="btn btn-secondary" onclick="loadAdminSection('reports')">Reportes</button>
+                <button class="btn btn-danger" onclick="logout()">Cerrar Sesión</button>
+            </div>
+            <div id="admin-content" class="mt-4"></div>
+        </div>
+    
+        <!-- Panel del Tutor -->
+        <div id="tutor-panel" class="hidden">
+            <h2>Panel del Tutor</h2>
+            <div>
+                <button class="btn btn-secondary" onclick="loadTutorSection('attendance')">Registrar Asistencia</button>
+                <button class="btn btn-secondary" onclick="loadTutorSection('grades')">Gestión de Calificaciones</button>
+                <button class="btn btn-secondary" onclick="loadTutorSection('reports')">Reportes</button>
+                <button class="btn btn-danger" onclick="logout()">Cerrar Sesión</button>
+            </div>
+            <div id="tutor-content" class="mt-4"></div>
+        </div>
+    
+        <!-- Secciones específicas de Administración -->
+        <!-- Gestión de Roles -->
+        <div id="roles-section" class="hidden">
+            <h3>Gestión de Roles</h3>
+            <button class="btn btn-success mb-3" onclick="showAddRoleForm()">Agregar Rol</button>
+            <div id="roles-list"></div>
+            <div id="roles-form" class="hidden">
+                <h4>Formulario de Rol</h4>
+                <form id="role-form">
+                    <input type="hidden" id="role-id">
+                    <div class="mb-3">
+                        <label for="role-name" class="form-label">Nombre del Rol</label>
+                        <input type="text" class="form-control" id="role-name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideAddRoleForm()">Cancelar</button>
+                </form>
             </div>
         </div>
+    
+        <!-- Gestión de Instituciones -->
+        <div id="institutions-section" class="hidden">
+            <h3>Gestión de Instituciones</h3>
+            <button class="btn btn-success mb-3" onclick="showAddInstitutionForm()">Agregar Institución</button>
+            <div id="institutions-list"></div>
+            <div id="institutions-form" class="hidden">
+                <h4>Formulario de Institución</h4>
+                <form id="institution-form">
+                    <input type="hidden" id="institution-id">
+                    <div class="mb-3">
+                        <label for="codigo-insti" class="form-label">Código</label>
+                        <input type="text" class="form-control" id="codigo-insti" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre-insti" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="nombre-insti" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre-rector" class="form-label">Nombre del Rector</label>
+                        <input type="text" class="form-control" id="nombre-rector" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="localidad" class="form-label">Localidad</label>
+                        <input type="text" class="form-control" id="localidad" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideAddInstitutionForm()">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Gestión de Aulas -->
+        <div id="aulas-section" class="hidden">
+            <h3>Gestión de Aulas</h3>
+            <button class="btn btn-success mb-3" onclick="showAddAulaForm()">Agregar Aula</button>
+            <div id="aulas-list"></div>
+            <div id="aulas-form" class="hidden">
+                <h4>Formulario de Aula</h4>
+                <form id="aula-form">
+                    <input type="hidden" id="aula-grupo">
+                    <div class="mb-3">
+                        <label for="grado-t" class="form-label">Grado (Texto)</label>
+                        <input type="text" class="form-control" id="grado-t" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="grado-num" class="form-label">Grado (Número)</label>
+                        <input type="number" class="form-control" id="grado-num" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="grupo-equiv" class="form-label">Grupo Equivalente</label>
+                        <input type="text" class="form-control" id="grupo-equiv">
+                    </div>
+                    <div class="mb-3">
+                        <label for="jornada" class="form-label">Jornada</label>
+                        <input type="text" class="form-control" id="jornada" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideAddAulaForm()">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Gestión de Estudiantes -->
+        <div id="estudiantes-section" class="hidden">
+            <h3>Gestión de Estudiantes</h3>
+            <button class="btn btn-success mb-3" onclick="showAddStudentForm()">Agregar Estudiante</button>
+            <div id="estudiantes-list"></div>
+            <div id="estudiantes-form" class="hidden">
+                <h4>Formulario de Estudiante</h4>
+                <form id="student-form">
+                    <input type="hidden" id="student-id">
+                    <div class="mb-3">
+                        <label for="tipo-id" class="form-label">Tipo de Identificación</label>
+                        <select id="tipo-id" class="form-select" required>
+                            <option value="TI">TI</option>
+                            <option value="CC">CC</option>
+                            <option value="RC">RC</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id-estudiante" class="form-label">Número de Identificación</label>
+                        <input type="text" class="form-control" id="id-estudiante" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="primer-nombre" class="form-label">Primer Nombre</label>
+                        <input type="text" class="form-control" id="primer-nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="primer-apellido" class="form-label">Primer Apellido</label>
+                        <input type="text" class="form-control" id="primer-apellido" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="grupo" class="form-label">Grupo</label>
+                        <input type="number" class="form-control" id="grupo" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideAddStudentForm()">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Gestión de Horarios -->
+        <div id="horarios-section" class="hidden">
+            <h3>Gestión de Horarios</h3>
+            <button class="btn btn-success mb-3" onclick="showAddScheduleForm()">Agregar Horario</button>
+            <div id="horarios-list"></div>
+            <div id="horarios-form" class="hidden">
+                <h4>Formulario de Horario</h4>
+                <form id="schedule-form">
+                    <div class="mb-3">
+                        <label for="hora-inicio" class="form-label">Hora Inicio</label>
+                        <input type="time" class="form-control" id="hora-inicio" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hora-fin" class="form-label">Hora Fin</label>
+                        <input type="time" class="form-control" id="hora-fin" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="dia-texto" class="form-label">Día de la Semana</label>
+                        <input type="text" class="form-control" id="dia-texto" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideAddScheduleForm()">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Gestión de Calificaciones -->
+        <div id="calificaciones-section" class="hidden">
+            <h3>Gestión de Calificaciones</h3>
+            <button class="btn btn-success mb-3" onclick="showAddGradeForm()">Registrar Calificación</button>
+            <div id="calificaciones-list"></div>
+            <div id="calificaciones-form" class="hidden">
+                <h4>Formulario de Calificación</h4>
+                <form id="grade-form">
+                    <div class="mb-3">
+                        <label for="id-estudiante" class="form-label">ID del Estudiante</label>
+                        <input type="text" class="form-control" id="id-estudiante" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="bloque-lectivo" class="form-label">Bloque Lectivo</label>
+                        <select id="bloque-lectivo" class="form-select" required>
+                            <option value="1">Bloque 1</option>
+                            <option value="2">Bloque 2</option>
+                            <option value="3">Bloque 3</option>
+                            <option value="4">Bloque 4</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nota" class="form-label">Nota</label>
+                        <input type="number" class="form-control" id="nota" min="0" max="5" step="0.1" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideAddGradeForm()">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Gestión de Asistencias -->
+        <div id="attendance-section" class="hidden">
+            <h3>Gestión de Asistencias</h3>
+            <button class="btn btn-success mb-3" onclick="showAddAttendanceForm()">Registrar Asistencia</button>
+            <div id="attendance-list"></div>
+            <div id="attendance-form" class="hidden">
+                <h4>Registrar Asistencia</h4>
+                <form id="attendance-form">
+                    <div class="mb-3">
+                        <label for="attendance-group" class="form-label">Grupo</label>
+                        <input type="number" class="form-control" id="attendance-group" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="attendance-date" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="attendance-date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="attendance-tutor" class="form-label">ID Tutor</label>
+                        <input type="text" class="form-control" id="attendance-tutor" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideAddAttendanceForm()">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    
+        <!-- Reportes -->
+        <div id="reportes-section" class="hidden">
+            <h3>Reportes</h3>
+            <button class="btn btn-info mb-3" onclick="loadReport('aulas')">Reporte de Aulas</button>
+            <button class="btn btn-info mb-3" onclick="loadReport('asistencia-estudiantes')">Asistencia de Estudiantes</button>
+            <button class="btn btn-info mb-3" onclick="loadReport('asistencia-tutores')">Asistencia de Tutores</button>
+            <div id="reportes-content"></div>
+        </div>
     </div>
+    
 
-    <!-- Modales de Edición -->
-    <!-- Modal para Editar Usuario -->
-    <div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <form id="editar-usuario-form">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Editar Usuario</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" id="editar_id_usuario">
-              <div class="mb-3">
-                <label for="editar_rol" class="form-label">Rol</label>
-                <select class="form-select" id="editar_rol" required>
-                  <option value="">Seleccione</option>
-                  <option value="Administrador">Administrador</option>
-                  <option value="Tutor">Tutor</option>
-                </select>
-              </div>
-              <div class="mb-3">
-                <label for="editar_pwd" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="editar_pwd" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_tipo_id" class="form-label">Tipo de ID</label>
-                <input type="text" class="form-control" id="editar_tipo_id" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_identificacion_usuario" class="form-label">Identificación</label>
-                <input type="text" class="form-control" id="editar_identificacion_usuario" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_primer_nombre_usuario" class="form-label">Primer Nombre</label>
-                <input type="text" class="form-control" id="editar_primer_nombre_usuario" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_segundo_nombre_usuario" class="form-label">Segundo Nombre</label>
-                <input type="text" class="form-control" id="editar_segundo_nombre_usuario">
-              </div>
-              <div class="mb-3">
-                <label for="editar_primer_apellido_usuario" class="form-label">Primer Apellido</label>
-                <input type="text" class="form-control" id="editar_primer_apellido_usuario" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_segundo_apellido_usuario" class="form-label">Segundo Apellido</label>
-                <input type="text" class="form-control" id="editar_segundo_apellido_usuario">
-              </div>
-              <div class="mb-3">
-                <label for="editar_correo_usuario" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="editar_correo_usuario" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_telefono_usuario" class="form-label">Teléfono</label>
-                <input type="text" class="form-control" id="editar_telefono_usuario" required>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
 
-    <!-- Modal para Editar Aula -->
-    <div class="modal fade" id="editarAulaModal" tabindex="-1" aria-labelledby="editarAulaModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <form id="editar-aula-form">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Editar Aula</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-              <input type="hidden" id="editar_grupo_aula">
-              <div class="mb-3">
-                <label for="editar_grado_t" class="form-label">Tipo de Grado</label>
-                <input type="text" class="form-control" id="editar_grado_t" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_grado_num" class="form-label">Número de Grado</label>
-                <input type="number" class="form-control" id="editar_grado_num" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_grupo_equivalente" class="form-label">Grupo Equivalente</label>
-                <input type="text" class="form-control" id="editar_grupo_equivalente" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_jornada" class="form-label">Jornada</label>
-                <input type="text" class="form-control" id="editar_jornada" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_codigo_insti" class="form-label">Código de Institución</label>
-                <input type="text" class="form-control" id="editar_codigo_insti" required>
-              </div>
-              <div class="mb-3">
-                <label for="editar_id_usuario_tutor" class="form-label">ID Usuario Tutor</label>
-                <input type="text" class="form-control" id="editar_id_usuario_tutor" required>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
 
-    <!-- Bootstrap JS y dependencias (Popper.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- JavaScript para manejar la lógica de la aplicación -->
+
     <script>
-        const loginSection = document.getElementById('login-section');
-        const appSection = document.getElementById('app-section');
-        const loginForm = document.getElementById('login-form');
-        const loginError = document.getElementById('login-error');
-        const logoutBtn = document.getElementById('logout-btn');
-        let accessToken = '';
 
-        // Función para mostrar u ocultar secciones
-        function showSection(section) {
-            if (section === 'login') {
-                loginSection.classList.remove('hidden');
-                appSection.classList.add('hidden');
-            } else {
-                loginSection.classList.add('hidden');
-                appSection.classList.remove('hidden');
+        const apiUrl = 'http://127.0.0.1:5000'; // Cambiar según configuración del servidor
+
+
+        async function loadReport(type) {
+            const content = document.getElementById('reportes-content');
+            content.innerHTML = '<h3>Cargando reporte...</h3>';
+        
+            try {
+                let endpoint = '';
+                let params = {};
+        
+                if (type === 'aulas') {
+                    endpoint = `${apiUrl}/generar_reporte_aulas`;
+                } else if (type === 'asistencia-estudiantes') {
+                    endpoint = `${apiUrl}/asistencias-aula`;
+                    params = { grupo: 1 }; // Reemplazar con datos reales
+                } else if (type === 'asistencia-tutores') {
+                    endpoint = `${apiUrl}/asistencias-usuarios`;
+                    params = { grupo: 1 }; // Reemplazar con datos reales
+                }
+        
+                const response = await axios.get(endpoint, { params });
+                const reporte = response.data.reporte;
+        
+                let table = '<table class="table">';
+                if (type === 'aulas') {
+                    table += '<thead><tr><th>Grupo</th><th>Grado</th><th>Institución</th><th>Tutor</th></tr></thead><tbody>';
+                    reporte.forEach(aula => {
+                        table += `
+                            <tr>
+                                <td>${aula.grupo}</td>
+                                <td>${aula.grado_t} (${aula.grado_num})</td>
+                                <td>${aula.institucion}</td>
+                                <td>${aula.tutor}</td>
+                            </tr>`;
+                    });
+                } else if (type === 'asistencia-estudiantes' || type === 'asistencia-tutores') {
+                    table += '<thead><tr><th>Fecha</th><th>Nombre</th><th>Día</th><th>Hora Inicio</th><th>Asistencia</th></tr></thead><tbody>';
+                    reporte.forEach(asistencia => {
+                        table += `
+                            <tr>
+                                <td>${asistencia.fecha}</td>
+                                <td>${asistencia.estudiante || asistencia.usuario}</td>
+                                <td>${asistencia.dia}</td>
+                                <td>${asistencia.hora_inicio}</td>
+                                <td>${asistencia.asistio}</td>
+                            </tr>`;
+                    });
+                }
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar el reporte.</p>';
             }
         }
+        
 
-        // Inicialmente, mostrar la sección de login
-        showSection('login');
-
-        // Manejar el login
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            loginError.textContent = '';
-
-            const identificacion = document.getElementById('identificacion').value;
-            const password = document.getElementById('password').value;
-
+        async function loadGrades(content) {
+            content.innerHTML = '<h3>Cargando calificaciones...</h3>';
             try {
-                const response = await fetch('http://localhost:5000/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ identificacion, password })
+                const response = await axios.get(`${apiUrl}/calificaciones-aula`, {
+                    params: { grupo: 1, anio: new Date().getFullYear() } // Reemplazar con datos reales
                 });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    accessToken = data.access_token;
-                    showSection('app');
-                    cargarUsuarios();
-                    cargarAulas();
-                    cargarEstudiantes();
-                    cargarHorarios();
-                    cargarInstituciones();
-                } else {
-                    loginError.textContent = data.error || data.message;
-                }
+                const calificaciones = response.data.reporte;
+        
+                let table = '<table class="table">';
+                table += '<thead><tr><th>ID Estudiante</th><th>Nombre</th><th>Bloque</th><th>Nota</th></tr></thead><tbody>';
+                calificaciones.forEach(calificacion => {
+                    table += `
+                        <tr>
+                            <td>${calificacion.id_estudiante}</td>
+                            <td>${calificacion.nombre}</td>
+                            <td>${calificacion.bloque_lectivo}</td>
+                            <td>${calificacion.nota}</td>
+                        </tr>`;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
             } catch (error) {
-                loginError.textContent = 'Error de conexión';
+                content.innerHTML = '<p>Error al cargar calificaciones.</p>';
             }
-        });
-
-        // Manejar el logout
-        logoutBtn.addEventListener('click', () => {
-            accessToken = '';
-            showSection('login');
-        });
-
-        // Función para agregar encabezados de autorización
-        function getAuthHeaders() {
-            return {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
+        }
+        
+        function showAddGradeForm() {
+            document.getElementById('calificaciones-form').classList.remove('hidden');
+            document.getElementById('calificaciones-list').classList.add('hidden');
+        }
+        
+        function hideAddGradeForm() {
+            document.getElementById('calificaciones-form').classList.add('hidden');
+            document.getElementById('calificaciones-list').classList.remove('hidden');
+            document.getElementById('grade-form').reset();
+        }
+        
+        async function addGrade(event) {
+            event.preventDefault();
+            const data = {
+                id_estudiante: document.getElementById('id-estudiante').value,
+                bloque_lectivo: document.getElementById('bloque-lectivo').value,
+                nota: document.getElementById('nota').value
             };
-        }
-
-        // ==================== Usuarios ====================
-
-        const agregarUsuarioForm = document.getElementById('agregar-usuario-form');
-        const usuariosTableBody = document.querySelector('#usuarios-table tbody');
-
-        agregarUsuarioForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const rol = document.getElementById('rol').value;
-            const pwd = document.getElementById('pwd').value;
-            const tipo_id = document.getElementById('tipo_id').value;
-            const identificacion = document.getElementById('identificacion_usuario').value;
-            const primer_nombre = document.getElementById('primer_nombre_usuario').value;
-            const segundo_nombre = document.getElementById('segundo_nombre_usuario').value;
-            const primer_apellido = document.getElementById('primer_apellido_usuario').value;
-            const segundo_apellido = document.getElementById('segundo_apellido_usuario').value;
-            const correo = document.getElementById('correo_usuario').value;
-            const telefono = document.getElementById('telefono_usuario').value;
-
+        
             try {
-                const response = await fetch('http://localhost:5000/usuarios', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        rol, pwd, tipo_id, identificacion,
-                        primer_nombre, segundo_nombre, primer_apellido,
-                        segundo_apellido, correo, telefono
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    agregarUsuarioForm.reset();
-                    cargarUsuarios();
-                } else {
-                    alert(data.error || data.message);
-                }
+                await axios.post(`${apiUrl}/calificar-estudiante`, data);
+                alert('Calificación registrada exitosamente');
+                hideAddGradeForm();
+                loadGrades(document.getElementById('admin-content'));
             } catch (error) {
-                alert('Error de conexión');
-            }
-        });
-
-        async function cargarUsuarios() {
-            try {
-                const response = await fetch('http://localhost:5000/reportes/usuarios', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    usuariosTableBody.innerHTML = '';
-                    data.reporte.forEach(usuario => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${usuario.id_usuario}</td>
-                            <td>${usuario.nombre_completo}</td>
-                            <td>${usuario.rol}</td>
-                            <td>${usuario.correo}</td>
-                            <td>${usuario.telefono}</td>
-                            <td>
-                                <button class="btn btn-sm btn-primary editar-usuario-btn" data-id="${usuario.id_usuario}">Editar</button>
-                                <button class="btn btn-sm btn-danger eliminar-usuario-btn" data-id="${usuario.id_usuario}">Eliminar</button>
-                            </td>
-                        `;
-                        usuariosTableBody.appendChild(row);
-                    });
-                } else {
-                    usuariosTableBody.innerHTML = `<tr><td colspan="6">${data.message}</td></tr>`;
-                }
-            } catch (error) {
-                usuariosTableBody.innerHTML = `<tr><td colspan="6">Error de conexión</td></tr>`;
+                alert('Error al registrar la calificación.');
             }
         }
+        
 
-        // ==================== Aulas ====================
-
-        const agregarAulaForm = document.getElementById('agregar-aula-form');
-        const aulasTableBody = document.querySelector('#aulas-table tbody');
-
-        agregarAulaForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const grado_t = document.getElementById('grado_t').value;
-            const grado_num = document.getElementById('grado_num').value;
-            const grupo_equivalente = document.getElementById('grupo_equivalente').value;
-            const jornada = document.getElementById('jornada').value;
-            const codigo_insti = document.getElementById('codigo_insti').value;
-            const id_usuario = document.getElementById('id_usuario_tutor').value;
-
+        async function loadSchedules(content) {
+            content.innerHTML = '<h3>Cargando horarios...</h3>';
             try {
-                const response = await fetch('http://localhost:5000/aulas', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        grado_t, grado_num, grupo_equivalente, jornada, codigo_insti, id_usuario
-                    })
+                const response = await axios.get(`${apiUrl}/generar_horario_tutor`, {
+                    params: { id_usuario: 1 } // Reemplazar con datos reales
                 });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    agregarAulaForm.reset();
-                    cargarAulas();
-                } else {
-                    alert(data.error || data.message);
-                }
-            } catch (error) {
-                alert('Error de conexión');
-            }
-        });
-
-        async function cargarAulas() {
-            try {
-                const response = await fetch('http://localhost:5000/reportes/aulas', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    aulasTableBody.innerHTML = '';
-                    data.reporte.forEach(aula => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${aula.grupo}</td>
-                            <td>${aula.grado_t}</td>
-                            <td>${aula.grado_num}</td>
-                            <td>${aula.grupo_equivalente}</td>
-                            <td>${aula.jornada}</td>
-                            <td>${aula.anio}</td>
-                            <td>${aula.institucion}</td>
-                            <td>${aula.tutor}</td>
-                            <td>
-                                <button class="btn btn-sm btn-primary editar-aula-btn" data-id="${aula.grupo}">Editar</button>
-                                <button class="btn btn-sm btn-danger eliminar-aula-btn" data-id="${aula.grupo}">Eliminar</button>
-                            </td>
-                        `;
-                        aulasTableBody.appendChild(row);
-                    });
-                } else {
-                    aulasTableBody.innerHTML = `<tr><td colspan="9">${data.message}</td></tr>`;
-                }
-            } catch (error) {
-                aulasTableBody.innerHTML = `<tr><td colspan="9">Error de conexión</td></tr>`;
-            }
-        }
-
-        // ==================== Estudiantes ====================
-
-        const agregarEstudianteForm = document.getElementById('agregar-estudiante-form');
-        const estudiantesTableBody = document.querySelector('#estudiantes-table tbody');
-
-        agregarEstudianteForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const tipo_id = document.getElementById('tipo_id_estudiante').value;
-            const id_estudiante = document.getElementById('id_estudiante').value;
-            const primer_nombre = document.getElementById('primer_nombre_estudiante').value;
-            const segundo_nombre = document.getElementById('segundo_nombre_estudiante').value;
-            const primer_apellido = document.getElementById('primer_apellido_estudiante').value;
-            const segundo_apellido = document.getElementById('segundo_apellido_estudiante').value;
-            const genero = document.getElementById('genero_estudiante').value;
-            const fecha_nacimiento = document.getElementById('fecha_nacimiento_estudiante').value;
-            const estrato = document.getElementById('estrato_estudiante').value;
-            const anio = document.getElementById('anio_estudiante').value;
-            const grupo = document.getElementById('grupo_estudiante').value;
-
-            try {
-                const response = await fetch('http://localhost:5000/estudiantes', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        tipo_id, id_estudiante, primer_nombre, segundo_nombre,
-                        primer_apellido, segundo_apellido, genero, fecha_nacimiento,
-                        estrato, anio, grupo
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    agregarEstudianteForm.reset();
-                    cargarEstudiantes();
-                } else {
-                    alert(data.error || data.message);
-                }
-            } catch (error) {
-                alert('Error de conexión');
-            }
-        });
-
-        async function cargarEstudiantes() {
-            try {
-                const grupoSeleccionado = prompt('Ingrese el grupo para ver los estudiantes:');
-                if (!grupoSeleccionado) {
-                    estudiantesTableBody.innerHTML = `<tr><td colspan="8">No se ingresó ningún grupo.</td></tr>`;
-                    return;
-                }
-
-                const response = await fetch(`http://localhost:5000/reportes/estudiantes_aula?grupo=${grupoSeleccionado}`, {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    estudiantesTableBody.innerHTML = '';
-                    data.reporte.forEach(estudiante => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${estudiante.id_estudiante}</td>
-                            <td>${estudiante.nombre_completo}</td>
-                            <td>${estudiante.genero}</td>
-                            <td>${estudiante.fecha_nacimiento}</td>
-                            <td>${estudiante.estrato}</td>
-                            <td>${estudiante.anio}</td>
-                            <td>${estudiante.grupo}</td>
-                            <td>
-                                <button class="btn btn-sm btn-primary editar-estudiante-btn" data-id="${estudiante.id_estudiante}">Editar</button>
-                                <button class="btn btn-sm btn-danger eliminar-estudiante-btn" data-id="${estudiante.id_estudiante}">Eliminar</button>
-                            </td>
-                        `;
-                        estudiantesTableBody.appendChild(row);
-                    });
-                } else {
-                    estudiantesTableBody.innerHTML = `<tr><td colspan="8">${data.message}</td></tr>`;
-                }
-            } catch (error) {
-                estudiantesTableBody.innerHTML = `<tr><td colspan="8">Error de conexión</td></tr>`;
-            }
-        }
-
-        // ==================== Horarios ====================
-
-        const agregarHorarioForm = document.getElementById('agregar-horario-form');
-        const horariosTableBody = document.querySelector('#horarios-table tbody');
-
-        agregarHorarioForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const fecha_inicio = document.getElementById('fecha_inicio').value;
-            const fecha_fin = document.getElementById('fecha_fin').value;
-            const hora_inicio = document.getElementById('hora_inicio').value;
-            const hora_fin = document.getElementById('hora_fin').value;
-            const dia_inicial = document.getElementById('dia_inicial').value;
-            const dia_texto = document.getElementById('dia_texto').value;
-
-            try {
-                const response = await fetch('http://localhost:5000/horarios', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        fecha_inicio, fecha_fin, hora_inicio, hora_fin, dia_inicial, dia_texto
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    agregarHorarioForm.reset();
-                    cargarHorarios();
-                } else {
-                    alert(data.error || data.message);
-                }
-            } catch (error) {
-                alert('Error de conexión');
-            }
-        });
-
-        async function cargarHorarios() {
-            try {
-                const response = await fetch('http://localhost:5000/reportes/horarios', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    horariosTableBody.innerHTML = '';
-                    data.reporte.forEach(horario => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${horario.codigo_h}</td>
-                            <td>${horario.fecha_inicio}</td>
-                            <td>${horario.fecha_fin}</td>
+                const horarios = response.data.reporte;
+        
+                let table = '<table class="table">';
+                table += '<thead><tr><th>Día</th><th>Hora Inicio</th><th>Hora Fin</th><th>Acciones</th></tr></thead><tbody>';
+                horarios.forEach(horario => {
+                    table += `
+                        <tr>
+                            <td>${horario.dia}</td>
                             <td>${horario.hora_inicio}</td>
                             <td>${horario.hora_fin}</td>
-                            <td>${horario.dia_inicial}</td>
-                            <td>${horario.dia_texto}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary editar-horario-btn" data-id="${horario.codigo_h}">Editar</button>
-                                <button class="btn btn-sm btn-danger eliminar-horario-btn" data-id="${horario.codigo_h}">Eliminar</button>
+                                <button class="btn btn-sm btn-warning" onclick="editSchedule(${horario.codigo_horario})">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteSchedule(${horario.codigo_horario})">Eliminar</button>
                             </td>
-                        `;
-                        horariosTableBody.appendChild(row);
-                    });
-                } else {
-                    horariosTableBody.innerHTML = `<tr><td colspan="8">${data.message}</td></tr>`;
-                }
+                        </tr>`;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
             } catch (error) {
-                horariosTableBody.innerHTML = `<tr><td colspan="8">Error de conexión</td></tr>`;
+                content.innerHTML = '<p>Error al cargar horarios.</p>';
             }
         }
+        
+        function showAddScheduleForm() {
+            document.getElementById('horarios-form').classList.remove('hidden');
+            document.getElementById('horarios-list').classList.add('hidden');
+        }
+        
+        function hideAddScheduleForm() {
+            document.getElementById('horarios-form').classList.add('hidden');
+            document.getElementById('horarios-list').classList.remove('hidden');
+            document.getElementById('schedule-form').reset();
+        }
 
-        // ==================== Instituciones ====================
-
-        const agregarInstitucionForm = document.getElementById('agregar-institucion-form');
-        const institucionesTableBody = document.querySelector('#instituciones-table tbody');
-
-        agregarInstitucionForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const codigo_insti = document.getElementById('codigo_insti_insti').value;
-            const nombre_insti = document.getElementById('nombre_insti').value;
-            const nombre_rector = document.getElementById('nombre_rector').value;
-            const localidad = document.getElementById('localidad').value;
-            const barrio = document.getElementById('barrio').value;
-            const numero = document.getElementById('numero_insti').value;
-            const direccion = document.getElementById('direccion_insti').value;
-
+        async function editSchedule(codigoH) {
             try {
-                const response = await fetch('http://localhost:5000/instituciones', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        codigo_insti, nombre_insti, nombre_rector,
-                        localidad, barrio, numero, direccion
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    agregarInstitucionForm.reset();
-                    cargarInstituciones();
-                } else {
-                    alert(data.error || data.message);
-                }
+                const response = await axios.get(`${apiUrl}/horarios/${codigoH}`);
+                const horario = response.data;
+                showAddScheduleForm();
+                document.getElementById('hora-inicio').value = horario.hora_inicio;
+                document.getElementById('hora-fin').value = horario.hora_fin;
+                document.getElementById('dia-texto').value = horario.dia_texto;
             } catch (error) {
-                alert('Error de conexión');
+                alert('Error al cargar datos del horario.');
             }
-        });
+        }
+        
+        async function deleteSchedule(codigoH) {
+            if (confirm(`¿Estás seguro de eliminar el horario con código ${codigoH}?`)) {
+                try {
+                    await axios.delete(`${apiUrl}/eliminar-horario`, { data: { codigo_h: codigoH } });
+                    alert('Horario eliminado exitosamente');
+                    loadSchedules(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar el horario.');
+                }
+            }
+        }
+        
+        
 
-        async function cargarInstituciones() {
+        async function loadStudents(content) {
+            content.innerHTML = '<h3>Cargando estudiantes...</h3>';
             try {
-                const response = await fetch('http://localhost:5000/reportes/instituciones', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
+                const response = await axios.get(`${apiUrl}/reporte-estudiantes-aula`, {
+                    params: { grupo: 1 } // Reemplazar con el grupo seleccionado
                 });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    institucionesTableBody.innerHTML = '';
-                    data.reporte.forEach(insti => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${insti.codigo}</td>
-                            <td>${insti.nombre}</td>
-                            <td>${insti.rector}</td>
-                            <td>${insti.localidad}</td>
-                            <td>${insti.barrio}</td>
-                            <td>${insti.numero}</td>
-                            <td>${insti.direccion}</td>
-                            <td>${insti.anio}</td>
+                const estudiantes = response.data.reporte;
+        
+                let table = '<table class="table">';
+                table += '<thead><tr><th>ID</th><th>Nombre</th><th>Grupo</th><th>Acciones</th></tr></thead><tbody>';
+                estudiantes.forEach(estudiante => {
+                    table += `
+                        <tr>
+                            <td>${estudiante.id_estudiante}</td>
+                            <td>${estudiante.nombre_completo}</td>
+                            <td>${estudiante.grupo}</td>
                             <td>
-                                <button class="btn btn-sm btn-primary editar-institucion-btn" data-id="${insti.codigo}">Editar</button>
-                                <button class="btn btn-sm btn-danger eliminar-institucion-btn" data-id="${insti.codigo}">Eliminar</button>
+                                <button class="btn btn-sm btn-warning" onclick="editStudent('${estudiante.id_estudiante}')">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteStudent('${estudiante.id_estudiante}')">Eliminar</button>
                             </td>
-                        `;
-                        institucionesTableBody.appendChild(row);
+                        </tr>`;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar estudiantes.</p>';
+            }
+        }
+        
+        function showAddStudentForm() {
+            document.getElementById('estudiantes-form').classList.remove('hidden');
+            document.getElementById('estudiantes-list').classList.add('hidden');
+        }
+        
+        function hideAddStudentForm() {
+            document.getElementById('estudiantes-form').classList.add('hidden');
+            document.getElementById('estudiantes-list').classList.remove('hidden');
+            document.getElementById('student-form').reset();
+        }
+        
+        async function addStudent(event) {
+            event.preventDefault();
+            const form = document.getElementById('student-form');
+            const data = {
+                tipo_id: document.getElementById('tipo-id').value,
+                id_estudiante: document.getElementById('id-estudiante').value,
+                primer_nombre: document.getElementById('primer-nombre').value,
+                primer_apellido: document.getElementById('primer-apellido').value,
+                grupo: document.getElementById('grupo').value,
+                anio: new Date().getFullYear() // Año actual
+            };
+        
+            try {
+                await axios.post(`${apiUrl}/insertar-estudiante`, data);
+                alert('Estudiante agregado exitosamente');
+                hideAddStudentForm();
+                loadStudents(document.getElementById('admin-content'));
+            } catch (error) {
+                alert('Error al agregar el estudiante.');
+            }
+        }
+        
+        async function deleteStudent(idEstudiante) {
+            if (confirm(`¿Estás seguro de eliminar al estudiante con ID ${idEstudiante}?`)) {
+                try {
+                    await axios.delete(`${apiUrl}/eliminar-estudiante`, {
+                        data: { id_estudiante: idEstudiante }
                     });
+                    alert('Estudiante eliminado exitosamente');
+                    loadStudents(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar al estudiante.');
+                }
+            }
+        }
+        
+        async function editStudent(idEstudiante) {
+            try {
+                const response = await axios.get(`${apiUrl}/reporte-estudiantes-aula`, {
+                    params: { grupo: 1 } // Reemplazar con el grupo seleccionado
+                });
+                const estudiante = response.data.reporte.find(est => est.id_estudiante === idEstudiante);
+                showAddStudentForm();
+                document.getElementById('tipo-id').value = estudiante.tipo_id;
+                document.getElementById('id-estudiante').value = estudiante.id_estudiante;
+                document.getElementById('primer-nombre').value = estudiante.nombre_completo.split(' ')[0];
+                document.getElementById('primer-apellido').value = estudiante.nombre_completo.split(' ')[1];
+                document.getElementById('grupo').value = estudiante.grupo;
+                document.getElementById('student-id').value = idEstudiante;
+            } catch (error) {
+                alert('Error al cargar datos del estudiante.');
+            }
+        }
+        
+
+        async function loadClasses(content) {
+            content.innerHTML = '<h3>Cargando aulas...</h3>';
+            try {
+                const response = await axios.get(`${apiUrl}/generar_reporte_aulas`);
+                const aulas = response.data.reporte;
+        
+                let table = '<table class="table">';
+                table += '<thead><tr><th>Grupo</th><th>Grado</th><th>Jornada</th><th>Tutor</th><th>Acciones</th></tr></thead><tbody>';
+                aulas.forEach(aula => {
+                    table += `
+                        <tr>
+                            <td>${aula.grupo}</td>
+                            <td>${aula.grado_t} (${aula.grado_num})</td>
+                            <td>${aula.jornada}</td>
+                            <td>${aula.tutor}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="editAula(${aula.grupo})">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteAula(${aula.grupo})">Eliminar</button>
+                            </td>
+                        </tr>`;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar las aulas.</p>';
+            }
+        }
+        
+        function showAddAulaForm() {
+            document.getElementById('aulas-form').classList.remove('hidden');
+            document.getElementById('aulas-list').classList.add('hidden');
+        }
+        
+        function hideAddAulaForm() {
+            document.getElementById('aulas-form').classList.add('hidden');
+            document.getElementById('aulas-list').classList.remove('hidden');
+            document.getElementById('aula-form').reset();
+        }
+        
+        async function addAula(event) {
+            event.preventDefault();
+            const form = document.getElementById('aula-form');
+            const data = {
+                grado_t: document.getElementById('grado-t').value,
+                grado_num: document.getElementById('grado-num').value,
+                grupo_equivalente: document.getElementById('grupo-equiv').value,
+                jornada: document.getElementById('jornada').value,
+                codigo_insti: 1, // Reemplazar con datos reales
+                id_usuario: 1    // Reemplazar con datos reales
+            };
+        
+            try {
+                await axios.post(`${apiUrl}/aulas/agregar`, data);
+                alert('Aula agregada exitosamente');
+                hideAddAulaForm();
+                loadClasses(document.getElementById('admin-content'));
+            } catch (error) {
+                alert('Error al agregar el aula.');
+            }
+        }
+        
+        async function deleteAula(grupo) {
+            if (confirm(`¿Estás seguro de eliminar el aula con grupo ${grupo}?`)) {
+                try {
+                    await axios.delete(`${apiUrl}/aulas/eliminar/${grupo}`);
+                    alert('Aula eliminada exitosamente');
+                    loadClasses(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar el aula.');
+                }
+            }
+        }
+        
+        async function editAula(grupo) {
+            try {
+                const response = await axios.get(`${apiUrl}/aulas/${grupo}`);
+                const aula = response.data;
+                showAddAulaForm();
+                document.getElementById('grado-t').value = aula.grado_t;
+                document.getElementById('grado-num').value = aula.grado_num;
+                document.getElementById('grupo-equiv').value = aula.grupo_equivalente;
+                document.getElementById('jornada').value = aula.jornada;
+                document.getElementById('aula-grupo').value = grupo;
+            } catch (error) {
+                alert('Error al cargar el aula para edición.');
+            }
+        }
+        
+
+        
+
+        // Inicio de sesión
+        document.getElementById('login-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const identificacion = document.getElementById('identificacion').value;
+            const password = document.getElementById('password').value;
+        
+            try {
+                const response = await axios.post(`${apiUrl}/obtener-rol`, { identificacion, password });
+                const roles = response.data.roles;
+        
+                if (roles.includes('Administrador')) {
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('admin-panel').classList.remove('hidden');
+                } else if (roles.includes('Tutor')) {
+                    document.getElementById('login-section').classList.add('hidden');
+                    document.getElementById('tutor-panel').classList.remove('hidden');
                 } else {
-                    institucionesTableBody.innerHTML = `<tr><td colspan="9">${data.message}</td></tr>`;
+                    alert('Rol no reconocido.');
                 }
             } catch (error) {
-                institucionesTableBody.innerHTML = `<tr><td colspan="9">Error de conexión</td></tr>`;
+                alert('Error de autenticación: ' + (error.response?.data?.error || error.message));
+            }
+        });
+
+        async function loadRoles(content) {
+            content.innerHTML = '<h3>Cargando roles...</h3>';
+            try {
+                const response = await axios.get(`${apiUrl}/roles`);
+                const roles = response.data;
+        
+                let table = '<table class="table">';
+                table += '<thead><tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr></thead><tbody>';
+                roles.forEach(role => {
+                    table += `
+                        <tr>
+                            <td>${role.id}</td>
+                            <td>${role.name}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="editRole(${role.id})">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteRole(${role.id})">Eliminar</button>
+                            </td>
+                        </tr>`;
+                });
+                table += '</tbody></table>';
+                content.innerHTML = table;
+            } catch (error) {
+                content.innerHTML = '<p>Error al cargar roles.</p>';
             }
         }
 
-        // ==================== Reportes ====================
+        
 
-        const generarReporteAulasBtn = document.getElementById('generar-reporte-aulas');
-        const reporteAulasPre = document.getElementById('reporte-aulas');
+        // Cargar secciones dinámicas
+        async function loadAdminSection(section) {
+            const content = document.getElementById('admin-content');
+            content.innerHTML = `<h3>Cargando ${section}...</h3>`;
 
-        generarReporteAulasBtn.addEventListener('click', async () => {
+            if (section === 'users') await loadUsers(content);
+            if (section === 'institutions') await loadInstitutions(content);
+            if (section === 'classes') await loadClasses(content);
+            if (section === 'students') await loadStudents(content);
+            if (section === 'schedules') await loadSchedules(content);
+            if (section === 'grades') await loadGrades(content);
+            if (section === 'reports') await loadReports(content);
+        }
+
+        async function loadTutorSection(section) {
+            const content = document.getElementById('tutor-content');
+            content.innerHTML = `<h3>Cargando ${section}...</h3>`;
+        }
+
+        async function loadTutorReport() {
+            const content = document.getElementById('reportes-content');
+            content.innerHTML = '<h3>Cargando reporte de tutores...</h3>';
             try {
-                const response = await fetch('http://localhost:5000/reportes/aulas', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
+                const response = await axios.get(`${apiUrl}/reporte-tutores`);
+                const tutores = response.data.reporte;
+        
+                let table = '<table class="table">';
+                table += '<thead><tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Teléfono</th></tr></thead><tbody>';
+                tutores.forEach(tutor => {
+                    table += `
+                        <tr>
+                            <td>${tutor.id_usuario}</td>
+                            <td>${tutor.nombre} ${tutor.apellido}</td>
+                            <td>${tutor.correo}</td>
+                            <td>${tutor.telefono}</td>
+                        </tr>`;
                 });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    reporteAulasPre.textContent = JSON.stringify(data.reporte, null, 2);
-                } else {
-                    reporteAulasPre.textContent = data.message;
-                }
+                table += '</tbody></table>';
+                content.innerHTML = table;
             } catch (error) {
-                reporteAulasPre.textContent = 'Error de conexión';
+                content.innerHTML = '<p>Error al cargar el reporte de tutores.</p>';
             }
-        });
+        }
+        
 
-        const generarReporteAulasTutorBtn = document.getElementById('generar-reporte-aulas-tutor');
-        const reporteAulasTutorPre = document.getElementById('reporte-aulas-tutor');
-        const idUsuarioReporteAulasTutor = document.getElementById('id_usuario_reporte_aulas_tutor');
-
-        generarReporteAulasTutorBtn.addEventListener('click', async () => {
-            const id_usuario = idUsuarioReporteAulasTutor.value.trim();
-            if (!id_usuario) {
-                alert('Ingrese el ID Usuario del tutor');
-                return;
-            }
-
+        // CRUD de Usuarios
+        async function loadUsers(content) {
             try {
-                const response = await fetch(`http://localhost:5000/reportes/aulas_tutor?id_usuario=${id_usuario}`, {
-                    method: 'GET',
-                    headers: getAuthHeaders()
+                const response = await axios.get(`${apiUrl}/reporte-usuarios`);
+                const users = response.data.reporte;
+
+                let table = '<h3>Gestión de Usuarios</h3><table class="table">';
+                table += '<thead><tr><th>Nombre Completo</th><th>Rol</th><th>Correo</th><th>Teléfono</th></tr></thead><tbody>';
+                users.forEach(user => {
+                    table += `<tr><td>${user.nombre_completo}</td><td>${user.rol}</td><td>${user.correo}</td><td>${user.telefono}</td></tr>`;
                 });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    reporteAulasTutorPre.textContent = JSON.stringify(data.reporte, null, 2);
-                } else {
-                    reporteAulasTutorPre.textContent = data.message;
-                }
+                table += '</tbody></table>';
+                content.innerHTML = table;
             } catch (error) {
-                reporteAulasTutorPre.textContent = 'Error de conexión';
-            }
-        });
-
-        const generarReporteEstudiantesAulaBtn = document.getElementById('generar-reporte-estudiantes-aula');
-        const reporteEstudiantesAulaPre = document.getElementById('reporte-estudiantes-aula');
-        const grupoReporteEstudiantes = document.getElementById('grupo_reporte_estudiantes');
-
-        generarReporteEstudiantesAulaBtn.addEventListener('click', async () => {
-            const grupo = grupoReporteEstudiantes.value.trim();
-            if (!grupo) {
-                alert('Ingrese el grupo del aula');
-                return;
-            }
-
-            try {
-                const response = await fetch(`http://localhost:5000/reportes/estudiantes_aula?grupo=${grupo}`, {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    reporteEstudiantesAulaPre.textContent = JSON.stringify(data.reporte, null, 2);
-                } else {
-                    reporteEstudiantesAulaPre.textContent = data.message;
-                }
-            } catch (error) {
-                reporteEstudiantesAulaPre.textContent = 'Error de conexión';
-            }
-        });
-
-        const generarReporteInstitucionesBtn = document.getElementById('generar-reporte-instituciones');
-        const reporteInstitucionesPre = document.getElementById('reporte-instituciones');
-
-        generarReporteInstitucionesBtn.addEventListener('click', async () => {
-            try {
-                const response = await fetch('http://localhost:5000/reportes/instituciones', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    reporteInstitucionesPre.textContent = JSON.stringify(data.reporte, null, 2);
-                } else {
-                    reporteInstitucionesPre.textContent = data.message;
-                }
-            } catch (error) {
-                reporteInstitucionesPre.textContent = 'Error de conexión';
-            }
-        });
-
-        const generarReportePersonasBtn = document.getElementById('generar-reporte-personas');
-        const reportePersonasPre = document.getElementById('reporte-personas');
-
-        generarReportePersonasBtn.addEventListener('click', async () => {
-            try {
-                const response = await fetch('http://localhost:5000/reportes/personas', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    reportePersonasPre.textContent = JSON.stringify(data.reporte, null, 2);
-                } else {
-                    reportePersonasPre.textContent = data.message;
-                }
-            } catch (error) {
-                reportePersonasPre.textContent = 'Error de conexión';
-            }
-        });
-
-        const generarReporteTutoresBtn = document.getElementById('generar-reporte-tutores');
-        const reporteTutoresPre = document.getElementById('reporte-tutores');
-
-        generarReporteTutoresBtn.addEventListener('click', async () => {
-            try {
-                const response = await fetch('http://localhost:5000/reportes/tutores', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    reporteTutoresPre.textContent = JSON.stringify(data.reporte, null, 2);
-                } else {
-                    reporteTutoresPre.textContent = data.message;
-                }
-            } catch (error) {
-                reporteTutoresPre.textContent = 'Error de conexión';
-            }
-        });
-
-        const generarReporteCalificacionesBtn = document.getElementById('generar-reporte-calificaciones');
-        const reporteCalificacionesPre = document.getElementById('reporte-calificaciones');
-        const grupoCalificaciones = document.getElementById('grupo_calificaciones');
-        const anioCalificaciones = document.getElementById('anio_calificaciones');
-
-        generarReporteCalificacionesBtn.addEventListener('click', async () => {
-            const grupo = grupoCalificaciones.value.trim();
-            const anio = anioCalificaciones.value.trim();
-
-            if (!grupo || !anio) {
-                alert('Ingrese el grupo y el año');
-                return;
-            }
-
-            try {
-                const response = await fetch(`http://localhost:5000/reportes/calificaciones_aula?grupo=${grupo}&anio=${anio}`, {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    reporteCalificacionesPre.textContent = JSON.stringify(data.reporte, null, 2);
-                } else {
-                    reporteCalificacionesPre.textContent = data.message;
-                }
-            } catch (error) {
-                reporteCalificacionesPre.textContent = 'Error de conexión';
-            }
-        });
-
-        // ==================== Funcionalidades de Editar y Eliminar ====================
-
-        // ==================== Usuarios ====================
-
-        // Función para abrir el modal de edición y cargar los datos del usuario
-        document.addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('editar-usuario-btn')) {
-                const id_usuario = e.target.getAttribute('data-id');
-                abrirModalEditarUsuario(id_usuario);
-            }
-        });
-
-        async function abrirModalEditarUsuario(id_usuario) {
-            try {
-                // Obtener los datos del usuario específico
-                const response = await fetch('http://localhost:5000/reportes/usuarios', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    const usuario = data.reporte.find(u => u.id_usuario == id_usuario);
-                    if (usuario) {
-                        // Rellenar los campos del modal con los datos del usuario
-                        document.getElementById('editar_id_usuario').value = usuario.id_usuario;
-                        document.getElementById('editar_rol').value = usuario.rol;
-                        // Nota: No es recomendable mostrar la contraseña. Puedes optar por dejarla en blanco
-                        document.getElementById('editar_pwd').value = '';
-                        // Obtener tipo_id y otros campos mediante una solicitud adicional si no están incluidos en el reporte
-                        // Supongamos que el reporte incluye todos los campos necesarios
-                        // Para este ejemplo, necesitaríamos modificar el backend para incluir todos los campos
-                        // o realizar una solicitud GET específica para obtener los detalles completos del usuario
-                        // Por simplicidad, aquí dejaremos algunos campos en blanco
-                        // Idealmente, deberías adaptar esto según cómo estructures tu backend
-
-                        // Ejemplo:
-                        // document.getElementById('editar_tipo_id').value = usuario.tipo_id;
-                        // document.getElementById('editar_identificacion_usuario').value = usuario.identificacion;
-                        // ... y así sucesivamente
-
-                        // Abrir el modal
-                        const editarUsuarioModal = new bootstrap.Modal(document.getElementById('editarUsuarioModal'));
-                        editarUsuarioModal.show();
-                    } else {
-                        alert('Usuario no encontrado.');
-                    }
-                } else {
-                    alert(data.message || 'Error al obtener los datos del usuario.');
-                }
-            } catch (error) {
-                alert('Error de conexión');
+                content.innerHTML = '<p>Error al cargar usuarios.</p>';
             }
         }
 
-        // Manejar la actualización de usuario
-        const editarUsuarioForm = document.getElementById('editar-usuario-form');
-
-        editarUsuarioForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const id_usuario = document.getElementById('editar_id_usuario').value;
-            const rol = document.getElementById('editar_rol').value;
-            const pwd = document.getElementById('editar_pwd').value;
-            const tipo_id = document.getElementById('editar_tipo_id').value;
-            const identificacion = document.getElementById('editar_identificacion_usuario').value;
-            const primer_nombre = document.getElementById('editar_primer_nombre_usuario').value;
-            const segundo_nombre = document.getElementById('editar_segundo_nombre_usuario').value;
-            const primer_apellido = document.getElementById('editar_primer_apellido_usuario').value;
-            const segundo_apellido = document.getElementById('editar_segundo_apellido_usuario').value;
-            const correo = document.getElementById('editar_correo_usuario').value;
-            const telefono = document.getElementById('editar_telefono_usuario').value;
-
+        // CRUD de Instituciones
+        async function loadInstitutions(content) {
+            content.innerHTML = '<h3>Cargando instituciones...</h3>';
             try {
-                const response = await fetch(`http://localhost:5000/usuarios/${identificacion}`, {
-                    method: 'PUT',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        nuevo_rol: rol,
-                        nueva_pwd: pwd,
-                        nuevo_tipo_id: tipo_id,
-                        nueva_identificacion: identificacion,
-                        nuevo_primer_nombre: primer_nombre,
-                        nuevo_segundo_nombre: segundo_nombre,
-                        nuevo_primer_apellido: primer_apellido,
-                        nuevo_segundo_apellido: segundo_apellido,
-                        nuevo_correo: correo,
-                        nuevo_telefono: telefono
-                    })
+                const response = await axios.get(`${apiUrl}/reporte-instituciones`);
+                const institutions = response.data.reporte;
+        
+                let table = '<table class="table">';
+                table += '<thead><tr><th>Código</th><th>Nombre</th><th>Rector</th><th>Acciones</th></tr></thead><tbody>';
+                institutions.forEach(inst => {
+                    table += `
+                        <tr>
+                            <td>${inst.codigo}</td>
+                            <td>${inst.nombre}</td>
+                            <td>${inst.rector}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="editInstitution('${inst.codigo}')">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteInstitution('${inst.codigo}')">Eliminar</button>
+                            </td>
+                        </tr>`;
                 });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    editarUsuarioForm.reset();
-                    // Cerrar el modal
-                    const editarUsuarioModalEl = document.getElementById('editarUsuarioModal');
-                    const editarUsuarioModal = bootstrap.Modal.getInstance(editarUsuarioModalEl);
-                    editarUsuarioModal.hide();
-                    cargarUsuarios();
-                } else {
-                    alert(data.error || data.message);
-                }
+                table += '</tbody></table>';
+                content.innerHTML = table;
             } catch (error) {
-                alert('Error de conexión');
+                content.innerHTML = '<p>Error al cargar instituciones.</p>';
             }
-        });
-
-        // Función para manejar la eliminación de usuario
-        document.addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('eliminar-usuario-btn')) {
-                const id_usuario = e.target.getAttribute('data-id');
-                eliminarUsuario(id_usuario);
+        }
+        
+        async function deleteInstitution(codigo) {
+            if (confirm(`¿Estás seguro de eliminar la institución con código ${codigo}?`)) {
+                try {
+                    await axios.delete(`${apiUrl}/eliminar-institucion`, { data: { codigo_insti: codigo } });
+                    alert('Institución eliminada exitosamente');
+                    loadInstitutions(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar la institución.');
+                }
             }
-        });
-
-        async function eliminarUsuario(id_usuario) {
-            if (!confirm('¿Está seguro de que desea eliminar este usuario? Esta acción no se puede deshacer.')) {
-                return;
-            }
-
+        }
+        
+        function showAddInstitutionForm() {
+            document.getElementById('institutions-form').classList.remove('hidden');
+            document.getElementById('institutions-list').classList.add('hidden');
+        }
+        
+        function hideAddInstitutionForm() {
+            document.getElementById('institutions-form').classList.add('hidden');
+            document.getElementById('institutions-list').classList.remove('hidden');
+            document.getElementById('institution-form').reset();
+        }
+        
+        async function addInstitution(event) {
+            event.preventDefault();
+            const data = {
+                codigo_insti: document.getElementById('codigo-insti').value,
+                nombre_insti: document.getElementById('nombre-insti').value,
+                nombre_rector: document.getElementById('nombre-rector').value,
+                localidad: document.getElementById('localidad').value
+            };
+        
             try {
-                // Obtener la identificación del usuario para construir la URL
-                const responseUsuarios = await fetch('http://localhost:5000/reportes/usuarios', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
-                });
-
-                const dataUsuarios = await responseUsuarios.json();
-
-                if (responseUsuarios.ok) {
-                    const usuario = dataUsuarios.reporte.find(u => u.id_usuario == id_usuario);
-                    if (usuario) {
-                        const identificacion = usuario.identificacion || ''; // Asegúrate de que el backend incluya este campo
-
-                        if (!identificacion) {
-                            alert('No se pudo obtener la identificación del usuario.');
-                            return;
-                        }
-
-                        const response = await fetch(`http://localhost:5000/usuarios/${identificacion}`, {
-                            method: 'DELETE',
-                            headers: getAuthHeaders()
-                        });
-
-                        const data = await response.json();
-
-                        if (response.ok) {
-                            alert(data.message);
-                            cargarUsuarios();
-                        } else {
-                            alert(data.error || data.message);
-                        }
-                    } else {
-                        alert('Usuario no encontrado.');
-                    }
-                } else {
-                    alert(dataUsuarios.message || 'Error al obtener los datos del usuario.');
-                }
+                await axios.post(`${apiUrl}/agregar-institucion`, data);
+                alert('Institución agregada exitosamente');
+                hideAddInstitutionForm();
+                loadInstitutions(document.getElementById('admin-content'));
             } catch (error) {
-                alert('Error de conexión');
+                alert('Error al agregar la institución.');
+            }
+        }
+        
+        async function editInstitution(codigo) {
+            try {
+                const response = await axios.get(`${apiUrl}/reporte-instituciones`);
+                const institution = response.data.reporte.find(inst => inst.codigo === codigo);
+                showAddInstitutionForm();
+                document.getElementById('codigo-insti').value = institution.codigo;
+                document.getElementById('nombre-insti').value = institution.nombre;
+                document.getElementById('nombre-rector').value = institution.rector;
+                document.getElementById('localidad').value = institution.localidad;
+            } catch (error) {
+                alert('Error al cargar datos de la institución.');
             }
         }
 
-        // ==================== Aulas ====================
-
-        // Función para abrir el modal de edición y cargar los datos del aula
-        document.addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('editar-aula-btn')) {
-                const grupo = e.target.getAttribute('data-id');
-                abrirModalEditarAula(grupo);
-            }
-        });
-
-        async function abrirModalEditarAula(grupo) {
+        async function loadInstitutions(content) {
+            content.innerHTML = '<h3>Cargando instituciones...</h3>';
             try {
-                const response = await fetch('http://localhost:5000/reportes/aulas', {
-                    method: 'GET',
-                    headers: getAuthHeaders()
+                const response = await axios.get(`${apiUrl}/reporte-instituciones`);
+                const institutions = response.data.reporte;
+        
+                let table = '<table class="table">';
+                table += '<thead><tr><th>Código</th><th>Nombre</th><th>Rector</th><th>Acciones</th></tr></thead><tbody>';
+                institutions.forEach(inst => {
+                    table += `
+                        <tr>
+                            <td>${inst.codigo}</td>
+                            <td>${inst.nombre}</td>
+                            <td>${inst.rector}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" onclick="editInstitution('${inst.codigo}')">Editar</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteInstitution('${inst.codigo}')">Eliminar</button>
+                            </td>
+                        </tr>`;
                 });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    const aula = data.reporte.find(a => a.grupo == grupo);
-                    if (aula) {
-                        // Rellenar los campos del modal con los datos del aula
-                        document.getElementById('editar_grupo_aula').value = aula.grupo;
-                        document.getElementById('editar_grado_t').value = aula.grado_t;
-                        document.getElementById('editar_grado_num').value = aula.grado_num;
-                        document.getElementById('editar_grupo_equivalente').value = aula.grupo_equivalente;
-                        document.getElementById('editar_jornada').value = aula.jornada;
-                        document.getElementById('editar_codigo_insti').value = aula.codigo_insti;
-                        // Obtener el IDUsuario del tutor puede requerir una solicitud adicional
-                        // Por simplicidad, asumiremos que está incluido en el reporte
-                        // document.getElementById('editar_id_usuario_tutor').value = aula.id_usuario;
-                        // Si no está incluido, adapta según tu estructura
-
-                        // Abrir el modal
-                        const editarAulaModal = new bootstrap.Modal(document.getElementById('editarAulaModal'));
-                        editarAulaModal.show();
-                    } else {
-                        alert('Aula no encontrada.');
-                    }
-                } else {
-                    alert(data.message || 'Error al obtener los datos del aula.');
-                }
+                table += '</tbody></table>';
+                content.innerHTML = table;
             } catch (error) {
-                alert('Error de conexión');
+                content.innerHTML = '<p>Error al cargar instituciones.</p>';
             }
         }
-
-        // Manejar la actualización de aula
-        const editarAulaForm = document.getElementById('editar-aula-form');
-
-        editarAulaForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const grupo = document.getElementById('editar_grupo_aula').value;
-            const grado_t = document.getElementById('editar_grado_t').value;
-            const grado_num = document.getElementById('editar_grado_num').value;
-            const grupo_equivalente = document.getElementById('editar_grupo_equivalente').value;
-            const jornada = document.getElementById('editar_jornada').value;
-            const codigo_insti = document.getElementById('editar_codigo_insti').value;
-            const id_usuario = document.getElementById('editar_id_usuario_tutor').value;
-
-            try {
-                const response = await fetch(`http://localhost:5000/aulas/${grupo}`, {
-                    method: 'PUT',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        grado_t, grado_num, grupo_equivalente, jornada, codigo_insti, id_usuario
-                    })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    editarAulaForm.reset();
-                    // Cerrar el modal
-                    const editarAulaModalEl = document.getElementById('editarAulaModal');
-                    const editarAulaModal = bootstrap.Modal.getInstance(editarAulaModalEl);
-                    editarAulaModal.hide();
-                    cargarAulas();
-                } else {
-                    alert(data.error || data.message);
+        
+        async function deleteInstitution(codigo) {
+            if (confirm(`¿Estás seguro de eliminar la institución con código ${codigo}?`)) {
+                try {
+                    await axios.delete(`${apiUrl}/eliminar-institucion`, { data: { codigo_insti: codigo } });
+                    alert('Institución eliminada exitosamente');
+                    loadInstitutions(document.getElementById('admin-content'));
+                } catch (error) {
+                    alert('Error al eliminar la institución.');
                 }
-            } catch (error) {
-                alert('Error de conexión');
-            }
-        });
-
-        // Función para manejar la eliminación de aula
-        document.addEventListener('click', function(e) {
-            if (e.target && e.target.classList.contains('eliminar-aula-btn')) {
-                const grupo = e.target.getAttribute('data-id');
-                eliminarAula(grupo);
-            }
-        });
-
-        async function eliminarAula(grupo) {
-            if (!confirm('¿Está seguro de que desea eliminar esta aula? Esta acción no se puede deshacer.')) {
-                return;
-            }
-
-            try {
-                const response = await fetch(`http://localhost:5000/aulas/${grupo}`, {
-                    method: 'DELETE',
-                    headers: getAuthHeaders()
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    alert(data.message);
-                    cargarAulas();
-                } else {
-                    alert(data.error || data.message);
-                }
-            } catch (error) {
-                alert('Error de conexión');
             }
         }
+        
+        function showAddInstitutionForm() {
+            document.getElementById('institutions-form').classList.remove('hidden');
+            document.getElementById('institutions-list').classList.add('hidden');
+        }
+        
+        function hideAddInstitutionForm() {
+            document.getElementById('institutions-form').classList.add('hidden');
+            document.getElementById('institutions-list').classList.remove('hidden');
+            document.getElementById('institution-form').reset();
+        }
+        
+        async function addInstitution(event) {
+            event.preventDefault();
+            const data = {
+                codigo_insti: document.getElementById('codigo-insti').value,
+                nombre_insti: document.getElementById('nombre-insti').value,
+                nombre_rector: document.getElementById('nombre-rector').value,
+                localidad: document.getElementById('localidad').value
+            };
+        
+            try {
+                await axios.post(`${apiUrl}/agregar-institucion`, data);
+                alert('Institución agregada exitosamente');
+                hideAddInstitutionForm();
+                loadInstitutions(document.getElementById('admin-content'));
+            } catch (error) {
+                alert('Error al agregar la institución.');
+            }
+        }
+        
+        async function editInstitution(codigo) {
+            try {
+                const response = await axios.get(`${apiUrl}/reporte-instituciones`);
+                const institution = response.data.reporte.find(inst => inst.codigo === codigo);
+                showAddInstitutionForm();
+                document.getElementById('codigo-insti').value = institution.codigo;
+                document.getElementById('nombre-insti').value = institution.nombre;
+                document.getElementById('nombre-rector').value = institution.rector;
+                document.getElementById('localidad').value = institution.localidad;
+            } catch (error) {
+                alert('Error al cargar datos de la institución.');
+            }
+        }
+        
+        
 
-        // ==================== Estudiantes ====================
-
-        // Similar a Usuarios y Aulas, implementa funciones para Editar y Eliminar Estudiantes
-        // Asegúrate de crear un modal similar al de Usuarios y Aulas para la edición de estudiantes
-
-        // ==================== Horarios e Instituciones ====================
-
-        // Aplica el mismo patrón para Horarios e Instituciones
-
+        // Función para cerrar sesión
+        function logout() {
+            document.getElementById('login-section').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+            document.getElementById('tutor-panel').classList.add('hidden');
+        }
     </script>
 </body>
 </html>
-
-
