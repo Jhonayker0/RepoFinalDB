@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from InicioSesion import verificar_usuario
 from Conexion import obtener_conexion
 from datetime import datetime
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/obtener-rol', methods=['POST'])
 def obtener_rol_api():
